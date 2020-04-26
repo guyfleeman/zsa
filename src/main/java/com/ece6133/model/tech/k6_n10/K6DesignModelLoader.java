@@ -3,6 +3,7 @@ package com.ece6133.model.tech.k6_n10;
 import com.ece6133.model.arch.k6_n10.K6Arch;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class K6DesignModelLoader {
@@ -135,5 +136,37 @@ public class K6DesignModelLoader {
 
     private void buildModelWithLutCtx(final String curLine) {
         LutBuilder.getInstance().appendDefLine(curLine);
+    }
+
+    public void loadPlacement(final File placeFile, K6DesignModel model) throws IOException {
+        final BufferedReader fileReader = new BufferedReader(new FileReader(placeFile));
+
+        ArrayList<PlacementInfo> plInfo = new ArrayList<>();
+        String curLine;
+        while ((curLine = fileReader.readLine()) != null) {
+            if (curLine.equalsIgnoreCase("") || curLine.startsWith("#") || curLine.startsWith("Netlist_File") || curLine.startsWith("Array")) {
+                continue;
+            }
+
+            String[] els = curLine.split("\t");
+            if (els.length != 5) {
+                throw new RuntimeException("pl file parse error");
+            }
+
+            PlacementInfo newPlacement = new PlacementInfo();
+            newPlacement.name = els[0];
+            newPlacement.x = Integer.parseInt(els[1]);
+            newPlacement.y = Integer.parseInt(els[2]);
+            newPlacement.subblk = Integer.parseInt(els[3]);
+            newPlacement._blknum = Integer.parseInt(els[4].replaceAll("#", ""));
+
+            plInfo.add(newPlacement);
+        }
+
+        mapPlacements(plInfo, model);
+    }
+
+    private void mapPlacements(ArrayList<PlacementInfo> plInfo, K6DesignModel model) {
+
     }
 }
