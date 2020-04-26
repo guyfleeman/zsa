@@ -1,6 +1,5 @@
 package com.ece6133.model.tech.k6_n10;
 
-import com.ece6133.model.arch.Arch;
 import com.ece6133.model.arch.k6_n10.K6Arch;
 
 public class SubcktBuilder {
@@ -24,15 +23,14 @@ public class SubcktBuilder {
         buildActive = false;
     }
 
-    public void flagStartBuild(final String subcktName, final K6Arch arch) {
-        if (!arch.supportsSubckt(subcktName)) {
-            throw new RuntimeException("cannot build subckt for unsupported subckt type");
-        }
-
+    public void flagStartBuild(final K6Arch arch) {
         this.arch = arch;
         subckt = new Subckt();
-
         buildActive = true;
+    }
+
+    public boolean isBuildActive() {
+        return buildActive;
     }
 
     public void appendDefLine(String line) {
@@ -44,6 +42,10 @@ public class SubcktBuilder {
             }
 
             subckt.setTypeName(els[1]);
+            if (!arch.supportsSubckt(subckt.getName())) {
+                throw new RuntimeException("cannot build subckt for unsupported subckt type");
+            }
+
             subckt.setBackingType(arch.getModelByName(subckt.getTypeName()));
             startIndex = 2;
         }

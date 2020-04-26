@@ -19,6 +19,8 @@ public class K6Arch implements Arch {
                 return m;
             }
         }
+
+        return null;
     }
 
     @Override

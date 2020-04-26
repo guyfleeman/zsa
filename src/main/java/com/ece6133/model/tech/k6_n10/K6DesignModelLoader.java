@@ -1,5 +1,7 @@
 package com.ece6133.model.tech.k6_n10;
 
+import com.ece6133.model.arch.k6_n10.K6Arch;
+
 import java.io.*;
 import java.util.Arrays;
 
@@ -16,7 +18,7 @@ public class K6DesignModelLoader {
         NONE
     }
 
-    public K6DesignModel loadModel(final File modelBlif) throws IOException {
+    public K6DesignModel loadModel(final File modelBlif, final K6Arch arch) throws IOException {
         final BufferedReader fileReader = new BufferedReader(new FileReader(modelBlif));
 
         K6DesignModel model = new K6DesignModel();
@@ -26,6 +28,16 @@ public class K6DesignModelLoader {
         while ((curLine = fileReader.readLine()) != null) {
             if (curLine.equals("")) {
                 activeCtx = ParseCtxMode.NONE;
+                if (SubcktBuilder.getInstance().isBuildActive()) {
+                    Subckt newSubckt = SubcktBuilder.getInstance().get();
+                    model.addSubckt(newSubckt);
+                }
+
+                if (LutBuilder.getInstance().isBuildActive()) {
+                    Lut newLut = LutBuilder.getInstance().get();
+                    model.addLut(newLut);
+                }
+
                 continue;
             } else if (curLine.charAt(0) == '#') {
                 continue;
@@ -38,8 +50,12 @@ public class K6DesignModelLoader {
             } else if (curLine.startsWith(".latch")) {
                 activeCtx = ParseCtxMode.LATCH;
             } else if (curLine.startsWith(".subckt")) {
+                SubcktBuilder.getInstance().resetBuild();
+                SubcktBuilder.getInstance().flagStartBuild(arch);
                 activeCtx = ParseCtxMode.SUBCKT;
             } else if (curLine.startsWith(".names")) {
+                LutBuilder.getInstance().resetBuild();
+                LutBuilder.getInstance().flagStartBuild();
                 activeCtx = ParseCtxMode.LUT;
             }
 
@@ -56,8 +72,8 @@ public class K6DesignModelLoader {
             case INPUT: buildModelWithInputCtx(model, curLine); break;
             case OUTPUT: buildModelWithOutputCtx(model, curLine); break;
             case LATCH: buildModelWithLatchCtx(model, curLine); break;
-            case SUBCKT: buildModelWithSubcktCtx(model, curLine); break;
-            case LUT: buildModelWithLutCtx(model, curLine); break;
+            case SUBCKT: buildModelWithSubcktCtx(curLine); break;
+            case LUT: buildModelWithLutCtx(curLine); break;
             default: throw new RuntimeException("unreachable");
         }
     }
@@ -113,12 +129,11 @@ public class K6DesignModelLoader {
         model.addLatch(newLatch);
     }
 
-
-    private void buildModelWithSubcktCtx(K6DesignModel model, final String curLine) {
-
+    private void buildModelWithSubcktCtx(final String curLine) {
+        SubcktBuilder.getInstance().appendDefLine(curLine);
     }
 
-    private void buildModelWithLutCtx(K6DesignModel model, final String curLine) {
-
+    private void buildModelWithLutCtx(final String curLine) {
+        LutBuilder.getInstance().appendDefLine(curLine);
     }
 }
