@@ -2,6 +2,8 @@ package com.ece6133.model.tech.k6_n10;
 
 import com.ece6133.model.arch.k6_n10.K6Arch;
 import com.ece6133.model.timing.Block;
+import com.ece6133.model.timing.CoarseNetlist;
+import com.ece6133.model.timing.NetNode;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -251,5 +253,9 @@ public class K6DesignModelLoader {
             ArrayList<String> netNames = new ArrayList<>(Arrays.asList(port.getTextContent().split(" ")));
             blk.getOutputs().put(portName, netNames);
         }
+    }
+
+    public static CoarseNetlist buildCoarseNetlist(final HashMap<String, Block> blocks) {
+
     }
 }

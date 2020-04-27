@@ -1,6 +1,7 @@
 package com.ece6133.model.tech.k6_n10;
 
 import com.ece6133.model.arch.k6_n10.K6Arch;
+import com.ece6133.model.timing.NetNode;
 
 public class SubcktBuilder {
     protected static SubcktBuilder instance;

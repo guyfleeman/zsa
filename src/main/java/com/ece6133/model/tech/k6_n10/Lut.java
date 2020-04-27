@@ -1,5 +1,7 @@
 package com.ece6133.model.tech.k6_n10;
 
+import com.ece6133.model.timing.NetNode;
+
 import java.util.ArrayList;
 
 public class Lut {
