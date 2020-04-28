@@ -5,18 +5,33 @@ plugins {
 group 'org.example'
 version '1.0-SNAPSHOT'
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-}
-
 repositories {
     mavenCentral()
+}
+
+configurations {
+    doc {
+        transitive false
+    }
 }
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     implementation 'com.intellij:annotations:+@jar'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+javadoc {
+    source configurations.doc.collect { zipTree(it) }
+    include '**/*.java'
+    options.addStringOption('Xdoclint:none', '-quiet')
+
+    //source = sourceSets.main.allJava
+    //classpath = configurations.compile
 }
 
 task copyTestResources(type: Copy) {
