@@ -11,7 +11,7 @@ public class CoarsePathSegment {
     }
 
     public Block getSinkBlock() {
-        return source.getParent();
+        return sink.getParent();
     }
 
     public NetNode getSource() {
@@ -44,5 +44,10 @@ public class CoarsePathSegment {
 
     public void setRcRteDelay(float rcRteDelay) {
         this.rcRteDelay = rcRteDelay;
+    }
+
+    @Override
+    public String toString() {
+        return "" + source.getParent().getName() + " -> " + sink.getParent().getName() + "[TODO DLY]";
     }
 }

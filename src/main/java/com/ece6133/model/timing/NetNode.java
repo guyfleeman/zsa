@@ -24,4 +24,10 @@ public class NetNode {
     public void setParent(Block parent) {
         this.parent = parent;
     }
+
+    @Override
+    public String toString() {
+        return "NetNode: N: " + name + ", P: " + parent;
+    }
+
 }

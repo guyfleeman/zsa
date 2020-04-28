@@ -18,4 +18,21 @@ public class CoarseNetlist {
     public void addCoarseNet(CoarseNet net) {
         this.getNets().add(net);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder ret = new StringBuilder();
+        for (CoarseNet cn: nets) {
+            ret.append(cn.name).append(": ");
+            ret.append("Source: <").append(cn.source).append(">, ").append("\r\n\t");
+            ret.append("Sinks: [<");
+            for (NetNode sink: cn.sinks) {
+                ret.append(sink).append(">, <");
+            }
+            ret.append(">]").append("\r\n");
+            ret.append("\r\n");
+        }
+
+        return ret.toString();
+    }
 }

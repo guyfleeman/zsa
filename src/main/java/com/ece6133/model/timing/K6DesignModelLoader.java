@@ -280,11 +280,28 @@ public class K6DesignModelLoader {
         return cnl;
     }
 
+    public static void buildCoarseNetsForIRLBlock(Block b, final HashMap<String, Block> blocks, CoarseNetlist netlist) {
+        for (String iPortName: b.getInputs().keySet()) {
+            ArrayList<String> drivenPortNets = b.getOutputs().get(iPortName);
+            for (String drivenNetName: drivenPortNets) {
+                if (drivenNetName.equalsIgnoreCase("open")) {
+                    continue;
+                }
+
+                CoarseNet net = new CoarseNet();
+                net.source = new NetNode(drivenNetName);
+                net.source.setParent(b);
+                bindNetSinks(net, blocks);
+                netlist.addCoarseNet(net);
+            }
+        }
+    }
+
     public static void buildCoarseNetsForBlock(Block b, final HashMap<String, Block> blocks, CoarseNetlist netlist) {
         for (String oPortName: b.getOutputs().keySet()) {
             ArrayList<String> drivenPortNets = b.getOutputs().get(oPortName);
             for (String drivenNetName: drivenPortNets) {
-                if (drivenNetName.equalsIgnoreCase("open")) {
+                if (drivenNetName.equalsIgnoreCase("open") || drivenNetName.contains("fle")) {
                     continue;
                 }
 
@@ -318,7 +335,7 @@ public class K6DesignModelLoader {
         ArrayList<CoarsePath> gatedCoarsePaths = buildCoarsePathsFromGraph(timingGraph, coarsePathSegments);
 
         CoarsePathList cpl = new CoarsePathList();
-        cpl.getCoarsePathSegments().addAll(gatedCoarsePaths);
+        cpl.getCoarsePaths().addAll(gatedCoarsePaths);
 
         return cpl;
     }
@@ -338,25 +355,28 @@ public class K6DesignModelLoader {
                 continue;
             }
 
-            for (CoarsePathSegment cp2: coarsePathSegments) {
-                Block cp2SourceBlock = cp2.getSourceBlock();
-                Block cp2SinkBlock = cp2.getSinkBlock();
+            blockNodes.get(cp1SourceBlock).getImmediateDownstreamBlocks().add(blockNodes.get(cp1SinkBlock));
+            blockNodes.get(cp1SinkBlock).getImmediateUpstreamBlocks().add(blockNodes.get(cp1SourceBlock));
 
-                // internal connection
-                if (cp2SourceBlock == cp2SinkBlock) {
-                    continue;
-                }
-
-                // cp1 is before cp2
-                // add edge
-                if (cp1SinkBlock == cp2SourceBlock) {
-                    blockNodes.get(cp1SinkBlock).getImmediateDownstreamBlocks().add(blockNodes.get(cp2SourceBlock));
-                    blockNodes.get(cp2SourceBlock).getImmediateUpstreamBlocks().add(blockNodes.get(cp1SinkBlock));
-                } else if (cp2SinkBlock == cp1SourceBlock) {
-                    blockNodes.get(cp2SinkBlock).getImmediateDownstreamBlocks().add(blockNodes.get(cp1SourceBlock));
-                    blockNodes.get(cp1SourceBlock).getImmediateUpstreamBlocks().add(blockNodes.get(cp2SinkBlock));
-                }
-            }
+//            for (CoarsePathSegment cp2: coarsePathSegments) {
+//                Block cp2SourceBlock = cp2.getSourceBlock();
+//                Block cp2SinkBlock = cp2.getSinkBlock();
+//
+//                // internal connection
+//                if (cp2SourceBlock == cp2SinkBlock) {
+//                    continue;
+//                }
+//
+//                // cp1 is before cp2
+//                // add edge
+//                if (cp1SinkBlock == cp2SourceBlock) {
+//                    blockNodes.get(cp1SinkBlock).getImmediateDownstreamBlocks().add(blockNodes.get(cp2SourceBlock));
+//                    blockNodes.get(cp2SourceBlock).getImmediateUpstreamBlocks().add(blockNodes.get(cp1SinkBlock));
+//                } else if (cp2SinkBlock == cp1SourceBlock) {
+//                    blockNodes.get(cp2SinkBlock).getImmediateDownstreamBlocks().add(blockNodes.get(cp1SourceBlock));
+//                    blockNodes.get(cp1SourceBlock).getImmediateUpstreamBlocks().add(blockNodes.get(cp2SinkBlock));
+//                }
+//            }
         }
 
         return blockNodes;
@@ -414,6 +434,7 @@ public class K6DesignModelLoader {
                     ArrayList<CoarsePathSegment> newCurPath = ((curPath == null)
                             ? new ArrayList<>()
                             : new ArrayList<>(curPath));
+                    newCurPath.add(cps);
                     generateDsPathRec(dsBn, allCoarsePaths, newCurPath, allGatedPaths);
                 }
             }

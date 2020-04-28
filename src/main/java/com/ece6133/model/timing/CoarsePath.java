@@ -12,4 +12,13 @@ public class CoarsePath {
     public void setPathSegments(ArrayList<CoarsePathSegment> pathSegments) {
         this.pathSegments = pathSegments;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder ret = new StringBuilder();
+        for (CoarsePathSegment cps: pathSegments) {
+            ret.append(cps).append(", ");
+        }
+        return ret.toString();
+    }
 }
