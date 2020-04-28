@@ -6,6 +6,7 @@ public class BlockNode {
     private Block block;
     private ArrayList<BlockNode> immediateUpstreamBlocks = new ArrayList<>();
     private ArrayList<BlockNode> immediateDownstreamBlocks = new ArrayList<>();
+    private ArrayList<CoarsePath> downstreamPaths = new ArrayList<>();
 
     public BlockNode(Block b) {
         setBlock(b);
@@ -33,5 +34,13 @@ public class BlockNode {
 
     public void setImmediateDownstreamBlocks(ArrayList<BlockNode> immediateDownstreamBlocks) {
         this.immediateDownstreamBlocks = immediateDownstreamBlocks;
+    }
+
+    public ArrayList<CoarsePath> getDownstreamPaths() {
+        return downstreamPaths;
+    }
+
+    public void setDownstreamPaths(ArrayList<CoarsePath> downstreamPaths) {
+        this.downstreamPaths = downstreamPaths;
     }
 }

@@ -317,7 +317,10 @@ public class K6DesignModelLoader {
         HashMap<Block, BlockNode> timingGraph = buildPathGraphNodes(blocks, coarsePathSegments);
         ArrayList<CoarsePath> gatedCoarsePaths = buildCoarsePathsFromGraph(timingGraph, coarsePathSegments);
 
-        return null;
+        CoarsePathList cpl = new CoarsePathList();
+        cpl.getCoarsePathSegments().addAll(gatedCoarsePaths);
+
+        return cpl;
     }
 
     public static HashMap<Block, BlockNode> buildPathGraphNodes(final HashMap<String, Block> blocks, ArrayList<CoarsePathSegment> coarsePathSegments) {
@@ -378,15 +381,22 @@ public class K6DesignModelLoader {
     }
 
     public static ArrayList<CoarsePath> buildCoarsePathsFromGraph(HashMap<Block, BlockNode> g, ArrayList<CoarsePathSegment> el) {
+        ArrayList<CoarsePath> cps = new ArrayList<>();
         for (BlockNode b: g.values()) {
             if (b.getBlock().isGated()) {
                 ArrayList<ArrayList<CoarsePathSegment>> dsGatedPaths = new ArrayList<>();
                 generateDsPathRecH(b, el, null, dsGatedPaths);
 
+                for (ArrayList<CoarsePathSegment> cpa: dsGatedPaths) {
+                    CoarsePath cp = new CoarsePath();
+                    cp.getPathSegments().addAll(cpa);
+                    b.getDownstreamPaths().add(cp);
+                    cps.add(cp);
+                }
             }
         }
 
-        return null;
+        return cps;
     }
 
     public static void generateDsPathRecH(
@@ -395,16 +405,15 @@ public class K6DesignModelLoader {
             ArrayList<CoarsePathSegment> curPath,
             ArrayList<ArrayList<CoarsePathSegment>> allGatedPaths) {
         if (curBlk.getImmediateDownstreamBlocks().size() == 0) {
-            allGatedPaths.add(curPath);
             return;
         }
 
         for (BlockNode dsBn: curBlk.getImmediateDownstreamBlocks()) {
             for (CoarsePathSegment cps: allCoarsePaths) {
                 if (cps.getSourceBlock() == curBlk.getBlock() && cps.getSinkBlock() == dsBn.getBlock()) {
-                    ArrayList<CoarsePathSegment> newCurPath = curPath == null
+                    ArrayList<CoarsePathSegment> newCurPath = ((curPath == null)
                             ? new ArrayList<>()
-                            : new ArrayList<>(curPath);
+                            : new ArrayList<>(curPath));
                     generateDsPathRec(dsBn, allCoarsePaths, newCurPath, allGatedPaths);
                 }
             }

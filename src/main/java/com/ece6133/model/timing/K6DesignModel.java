@@ -8,6 +8,7 @@ import com.ece6133.model.tech.k6_n10.Subckt;
 import com.ece6133.model.timing.NetNode;
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class K6DesignModel {
     private Arch arch = new K6Arch();
@@ -17,6 +18,9 @@ public class K6DesignModel {
     private ArrayList<Latch> latches = new ArrayList<>();
     private ArrayList<Lut> luts = new ArrayList<>();
     private ArrayList<Subckt> subckts = new ArrayList<>();
+
+    private HashMap<String, PlacementInfo> plInfo;
+    private HashMap<String, Block> blocks;
 
     public K6DesignModel() {
 
@@ -68,5 +72,21 @@ public class K6DesignModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public HashMap<String, PlacementInfo> getPlInfo() {
+        return plInfo;
+    }
+
+    public void setPlInfo(HashMap<String, PlacementInfo> plInfo) {
+        this.plInfo = plInfo;
+    }
+
+    public HashMap<String, Block> getBlocks() {
+        return blocks;
+    }
+
+    public void setBlocks(HashMap<String, Block> blocks) {
+        this.blocks = blocks;
     }
 }
