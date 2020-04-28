@@ -8,4 +8,17 @@ public class CoarseNet {
     public ArrayList<NetNode> sinks = new ArrayList<>();
     public int longestRectDist = -1;
     public float longestDelay = -1.0f;
+
+    @Override
+    public String toString() {
+        StringBuilder ret = new StringBuilder();
+        ret.append(name).append(": ");
+        ret.append("Source: <").append(source).append(">, ").append("\r\n\t");
+        ret.append("Sinks: [<");
+        for (NetNode sink: sinks) {
+            ret.append(sink).append(">, <");
+        }
+        ret.append(">]").append("\r\n");
+        return ret.toString();
+    }
 }

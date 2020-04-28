@@ -224,8 +224,8 @@ public class K6DesignModelLoader {
             Element inputsEl = (Element) topLevelChildE.getElementsByTagName("inputs").item(0);
             addInputs(inputsEl, tlBlock);
 
-            Element outputsEl = (Element) topLevelChildE.getElementsByTagName("outputs").item(0);
-            addOutputs(outputsEl, tlBlock);
+            //Element outputsEl = (Element) topLevelChildE.getElementsByTagName("outputs").item(0);
+            addOutputs(topLevelChildE, tlBlock);
 
             Element clocksEl = (Element) topLevelChildE.getElementsByTagName("clocks").item(0);
             assignGated(clocksEl, tlBlock);
@@ -247,12 +247,43 @@ public class K6DesignModelLoader {
     }
 
     public static void addOutputs(Element outputsEl, Block blk) {
+//        NodeList ports = outputsEl.getElementsByTagName("port");
+//        for (int i = 0; i < ports.getLength(); i++) {
+//            Element port = (Element) ports.item(i);
+//            String portName = port.getAttribute("name");
+//            ArrayList<String> netNames = new ArrayList<>(Arrays.asList(port.getTextContent().split(" ")));
+//            blk.getOutputs().put(portName, netNames);
+//        }
+
+        // man this little fucker was hidden....
+        boolean flagFFDirectCrossbarEnabled = false;
+
         NodeList ports = outputsEl.getElementsByTagName("port");
         for (int i = 0; i < ports.getLength(); i++) {
             Element port = (Element) ports.item(i);
             String portName = port.getAttribute("name");
-            ArrayList<String> netNames = new ArrayList<>(Arrays.asList(port.getTextContent().split(" ")));
-            blk.getOutputs().put(portName, netNames);
+            if (portName.equalsIgnoreCase("Q")) {
+                ArrayList<String> netNames = new ArrayList<>(Arrays.asList(port.getTextContent().split(" ")));
+                blk.getOutputs().put(portName, netNames);
+            }
+
+            if (portName.equalsIgnoreCase("D")) {
+                String portText = port.getTextContent();
+                if (portText.contains(".out[0]") && portText.contains("direct")) {
+                    flagFFDirectCrossbarEnabled = true;
+                }
+            }
+        }
+
+        for (int i = 0; i < ports.getLength(); i++) {
+            Element port = (Element) ports.item(i);
+            String portName = port.getAttribute("name");
+            if (portName.equalsIgnoreCase("out")) {
+                if (!flagFFDirectCrossbarEnabled) {
+                    ArrayList<String> netNames = new ArrayList<>(Arrays.asList(port.getTextContent().split(" ")));
+                    blk.getOutputs().put(portName, netNames);
+                }
+            }
         }
     }
 
@@ -269,6 +300,25 @@ public class K6DesignModelLoader {
         }
     }
 
+    public static CoarseNetlist buildCoarseNetlistBypassIC(final HashMap<String, Block> blocks) {
+        CoarseNetlist cnl = new CoarseNetlist();
+
+        for (String k: blocks.keySet()) {
+            Block b = blocks.get(k);
+            buildCoarseNetsForIRLBlock(b, blocks, cnl);
+        }
+
+        return cnl;
+    }
+
+    public static void buildCoarseNetsForIRLBlock(Block b, final HashMap<String, Block> blocks, CoarseNetlist netlist) {
+        CoarseNet net = new CoarseNet();
+        net.source = new NetNode(b.getName());
+        net.source.setParent(b);
+        bindNetSinks(net, blocks);
+        netlist.addCoarseNet(net);
+    }
+
     public static CoarseNetlist buildCoarseNetlist(final HashMap<String, Block> blocks) {
         CoarseNetlist cnl = new CoarseNetlist();
 
@@ -278,23 +328,6 @@ public class K6DesignModelLoader {
         }
 
         return cnl;
-    }
-
-    public static void buildCoarseNetsForIRLBlock(Block b, final HashMap<String, Block> blocks, CoarseNetlist netlist) {
-        for (String iPortName: b.getInputs().keySet()) {
-            ArrayList<String> drivenPortNets = b.getOutputs().get(iPortName);
-            for (String drivenNetName: drivenPortNets) {
-                if (drivenNetName.equalsIgnoreCase("open")) {
-                    continue;
-                }
-
-                CoarseNet net = new CoarseNet();
-                net.source = new NetNode(drivenNetName);
-                net.source.setParent(b);
-                bindNetSinks(net, blocks);
-                netlist.addCoarseNet(net);
-            }
-        }
     }
 
     public static void buildCoarseNetsForBlock(Block b, final HashMap<String, Block> blocks, CoarseNetlist netlist) {

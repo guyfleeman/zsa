@@ -133,6 +133,20 @@ public class PlacementLoaderTests {
         CoarseNetlist cnl = K6DesignModelLoader.buildCoarseNetlist(dm.getBlocks());
         System.out.println("Recovered Nets:" + cnl.getNets().size());
         System.out.println(cnl);
+
+        ArrayList<CoarseNet> badNets = new ArrayList<>();
+        for (CoarseNet cn: cnl.getNets()) {
+            if (cn.sinks.size() == 0) {
+                badNets.add(cn);
+            }
+        }
+
+        System.out.println("Bad Nets: " + badNets.size());
+        for (CoarseNet bn: badNets) {
+            System.out.println(bn);
+        }
+
+        assert(badNets.size() == 0);
     }
 
     @Test
