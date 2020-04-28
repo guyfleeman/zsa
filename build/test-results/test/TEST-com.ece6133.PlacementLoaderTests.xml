@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.ece6133.PlacementLoaderTests" tests="3" skipped="0" failures="0" errors="0" timestamp="2020-04-26T22:56:58" hostname="maven-desktop-linux" time="1.158">
+<testsuite name="com.ece6133.PlacementLoaderTests" tests="4" skipped="0" failures="0" errors="0" timestamp="2020-04-28T00:56:34" hostname="maven-desktop-linux" time="3.642">
   <properties/>
-  <testcase name="parsePlacement" classname="com.ece6133.PlacementLoaderTests" time="0.021"/>
-  <testcase name="loadNetlist" classname="com.ece6133.PlacementLoaderTests" time="0.58"/>
-  <testcase name="testPlacementMapping" classname="com.ece6133.PlacementLoaderTests" time="0.556"/>
-  <system-out><![CDATA[/home/guyfleeman/robojackets/ECE6133/src/test/resources/fir.place
+  <testcase name="testNetlistBuild" classname="com.ece6133.PlacementLoaderTests" time="2.556"/>
+  <testcase name="parsePlacement" classname="com.ece6133.PlacementLoaderTests" time="0.008"/>
+  <testcase name="loadNetlist" classname="com.ece6133.PlacementLoaderTests" time="0.493"/>
+  <testcase name="testPlacementMapping" classname="com.ece6133.PlacementLoaderTests" time="0.585"/>
+  <system-out><![CDATA[Recovered Nets:6751
+/home/guyfleeman/robojackets/ECE6133/src/test/resources/fir.place
 Block (fir^k0~6): I: 1, O: 1, PlInfo: PL Info (fir^k0~6): [7, 0], 1, 1019
 Block (n15058): I: 1, O: 1, PlInfo: PL Info (n15058): [35, 19], 0, 482
 Block (fir^k0~7): I: 1, O: 1, PlInfo: PL Info (fir^k0~7): [0, 14], 4, 1020

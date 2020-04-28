@@ -1,7 +1,5 @@
 package com.ece6133.model.timing;
 
-import com.ece6133.model.tech.k6_n10.PlacementInfo;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -10,6 +8,7 @@ public class Block {
     private HashMap<String, ArrayList<String>> inputs = new HashMap<>();
     private HashMap<String, ArrayList<String>> outputs = new HashMap<>();
     private PlacementInfo placementInfo = null;
+    private boolean gated = false;
 
     public String getName() {
         return name;
@@ -46,5 +45,13 @@ public class Block {
     @Override
     public String toString() {
         return "Block (" + name + "): " + "I: " + inputs.size() + ", O: " + outputs.size() + ", PlInfo: " + placementInfo;
+    }
+
+    public boolean isGated() {
+        return gated;
+    }
+
+    public void setGated(boolean gated) {
+        this.gated = gated;
     }
 }

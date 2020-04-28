@@ -23,4 +23,10 @@ task copyTestResources(type: Copy) {
     from "${projectDir}/src/test/resources"
     into "${buildDir}/classes/test"
 }
+
+test{
+    minHeapSize = "128m"
+    maxHeapSize = "1G"
+}
+
 processTestResources.dependsOn copyTestResources

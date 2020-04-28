@@ -1,9 +1,7 @@
-package com.ece6133.model.tech.k6_n10;
+package com.ece6133.model.timing;
 
 import com.ece6133.model.arch.k6_n10.K6Arch;
-import com.ece6133.model.timing.Block;
-import com.ece6133.model.timing.CoarseNetlist;
-import com.ece6133.model.timing.NetNode;
+import com.ece6133.model.tech.k6_n10.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -229,6 +227,9 @@ public class K6DesignModelLoader {
             Element outputsEl = (Element) topLevelChildE.getElementsByTagName("outputs").item(0);
             addOutputs(outputsEl, tlBlock);
 
+            Element clocksEl = (Element) topLevelChildE.getElementsByTagName("clocks").item(0);
+            assignGated(clocksEl, tlBlock);
+
             blocks.put(tlBlock.getName(), tlBlock);
         }
 
@@ -255,7 +256,181 @@ public class K6DesignModelLoader {
         }
     }
 
-    public static CoarseNetlist buildCoarseNetlist(final HashMap<String, Block> blocks) {
+    public static void assignGated(Element clkEl, Block blk) {
+        NodeList ports = clkEl.getElementsByTagName("port");
+        for (int i = 0; i < ports.getLength(); i++) {
+            Element port = (Element) ports.item(i);
+            String portName = port.getAttribute("name");
+            if (portName.equals("clk")) {
+                if (!port.getTextContent().equalsIgnoreCase("open")) {
+                    blk.setGated(true);
+                }
+            }
+        }
+    }
 
+    public static CoarseNetlist buildCoarseNetlist(final HashMap<String, Block> blocks) {
+        CoarseNetlist cnl = new CoarseNetlist();
+
+        for (String k: blocks.keySet()) {
+            Block b = blocks.get(k);
+            buildCoarseNetsForBlock(b, blocks, cnl);
+        }
+
+        return cnl;
+    }
+
+    public static void buildCoarseNetsForBlock(Block b, final HashMap<String, Block> blocks, CoarseNetlist netlist) {
+        for (String oPortName: b.getOutputs().keySet()) {
+            ArrayList<String> drivenPortNets = b.getOutputs().get(oPortName);
+            for (String drivenNetName: drivenPortNets) {
+                if (drivenNetName.equalsIgnoreCase("open")) {
+                    continue;
+                }
+
+                CoarseNet net = new CoarseNet();
+                net.source = new NetNode(drivenNetName);
+                net.source.setParent(b);
+                bindNetSinks(net, blocks);
+                netlist.addCoarseNet(net);
+            }
+        }
+    }
+
+    public static void bindNetSinks(CoarseNet net, final HashMap<String, Block> blocks) {
+        for (Block b: blocks.values()) {
+            for (String inputPortKey: b.getInputs().keySet()) {
+                ArrayList<String> inputPortNetNames = b.getInputs().get(inputPortKey);
+                for (String inputPortNetName: inputPortNetNames) {
+                    if (inputPortNetName.equals(net.source.getName())) {
+                        NetNode sink = new NetNode(inputPortNetName);
+                        sink.setParent(b);
+                        net.sinks.add(sink);
+                    }
+                }
+            }
+        }
+    }
+
+    public static CoarsePathList recoverPaths(CoarseNetlist netlist, final HashMap<String, Block> blocks) {
+        ArrayList<CoarsePathSegment> coarsePathSegments = buildCoarsePathSegements(netlist);
+        HashMap<Block, BlockNode> timingGraph = buildPathGraphNodes(blocks, coarsePathSegments);
+        ArrayList<CoarsePath> gatedCoarsePaths = buildCoarsePathsFromGraph(timingGraph, coarsePathSegments);
+
+        return null;
+    }
+
+    public static HashMap<Block, BlockNode> buildPathGraphNodes(final HashMap<String, Block> blocks, ArrayList<CoarsePathSegment> coarsePathSegments) {
+        HashMap<Block, BlockNode> blockNodes = new HashMap<>();
+        for (Block b: blocks.values()) {
+            blockNodes.put(b, new BlockNode(b));
+        }
+
+        for (CoarsePathSegment cp1: coarsePathSegments) {
+            Block cp1SourceBlock = cp1.getSourceBlock();
+            Block cp1SinkBlock = cp1.getSinkBlock();
+
+            // internal connection
+            if (cp1SourceBlock == cp1SinkBlock) {
+                continue;
+            }
+
+            for (CoarsePathSegment cp2: coarsePathSegments) {
+                Block cp2SourceBlock = cp2.getSourceBlock();
+                Block cp2SinkBlock = cp2.getSinkBlock();
+
+                // internal connection
+                if (cp2SourceBlock == cp2SinkBlock) {
+                    continue;
+                }
+
+                // cp1 is before cp2
+                // add edge
+                if (cp1SinkBlock == cp2SourceBlock) {
+                    blockNodes.get(cp1SinkBlock).getImmediateDownstreamBlocks().add(blockNodes.get(cp2SourceBlock));
+                    blockNodes.get(cp2SourceBlock).getImmediateUpstreamBlocks().add(blockNodes.get(cp1SinkBlock));
+                } else if (cp2SinkBlock == cp1SourceBlock) {
+                    blockNodes.get(cp2SinkBlock).getImmediateDownstreamBlocks().add(blockNodes.get(cp1SourceBlock));
+                    blockNodes.get(cp1SourceBlock).getImmediateUpstreamBlocks().add(blockNodes.get(cp2SinkBlock));
+                }
+            }
+        }
+
+        return blockNodes;
+    }
+
+    public static ArrayList<CoarsePathSegment> buildCoarsePathSegements(CoarseNetlist netlist) {
+        ArrayList<CoarsePathSegment> cps = new ArrayList<>();
+        for (CoarseNet cn: netlist.getNets()) {
+            flattenNetToPathSegments(cn, cps);
+        }
+
+        return cps;
+    }
+
+    public static void flattenNetToPathSegments(CoarseNet cn, ArrayList<CoarsePathSegment> cps) {
+        for (NetNode sink: cn.sinks) {
+            CoarsePathSegment cp = new CoarsePathSegment();
+            cp.setSource(cn.source);
+            cp.setSink(sink);
+            cps.add(cp);
+        }
+    }
+
+    public static ArrayList<CoarsePath> buildCoarsePathsFromGraph(HashMap<Block, BlockNode> g, ArrayList<CoarsePathSegment> el) {
+        for (BlockNode b: g.values()) {
+            if (b.getBlock().isGated()) {
+                ArrayList<ArrayList<CoarsePathSegment>> dsGatedPaths = new ArrayList<>();
+                generateDsPathRecH(b, el, null, dsGatedPaths);
+
+            }
+        }
+
+        return null;
+    }
+
+    public static void generateDsPathRecH(
+            BlockNode curBlk,
+            ArrayList<CoarsePathSegment> allCoarsePaths,
+            ArrayList<CoarsePathSegment> curPath,
+            ArrayList<ArrayList<CoarsePathSegment>> allGatedPaths) {
+        if (curBlk.getImmediateDownstreamBlocks().size() == 0) {
+            allGatedPaths.add(curPath);
+            return;
+        }
+
+        for (BlockNode dsBn: curBlk.getImmediateDownstreamBlocks()) {
+            for (CoarsePathSegment cps: allCoarsePaths) {
+                if (cps.getSourceBlock() == curBlk.getBlock() && cps.getSinkBlock() == dsBn.getBlock()) {
+                    ArrayList<CoarsePathSegment> newCurPath = curPath == null
+                            ? new ArrayList<>()
+                            : new ArrayList<>(curPath);
+                    generateDsPathRec(dsBn, allCoarsePaths, newCurPath, allGatedPaths);
+                }
+            }
+        }
+    }
+
+    public static void generateDsPathRec(
+            BlockNode curBlk,
+            ArrayList<CoarsePathSegment> allCoarsePaths,
+            ArrayList<CoarsePathSegment> curPath,
+            ArrayList<ArrayList<CoarsePathSegment>> allGatedPaths) {
+        if (curBlk.getImmediateDownstreamBlocks().size() == 0 || curBlk.getBlock().isGated()) {
+            allGatedPaths.add(curPath);
+            return;
+        }
+
+        for (BlockNode dsBn: curBlk.getImmediateDownstreamBlocks()) {
+            for (CoarsePathSegment cps: allCoarsePaths) {
+                if (cps.getSourceBlock() == curBlk.getBlock() && cps.getSinkBlock() == dsBn.getBlock()) {
+                    ArrayList<CoarsePathSegment> newCurPath = curPath == null
+                            ? new ArrayList<>()
+                            : new ArrayList<>(curPath);
+                    newCurPath.add(cps);
+                    generateDsPathRec(dsBn, allCoarsePaths, newCurPath, allGatedPaths);
+                }
+            }
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.ece6133.model.tech.k6_n10;
+package com.ece6133.model.timing;
 
 public class PlacementInfo {
     public String name = "";
