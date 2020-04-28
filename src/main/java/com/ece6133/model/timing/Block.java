@@ -12,6 +12,10 @@ public class Block {
     private HashMap<String, ArrayList<String>> outputs = new HashMap<>();
     private PlacementInfo placementInfo = null;
     private boolean gated = false;
+    private int slack = 0;
+    private int delay = 0;
+    private int requiredTime = 0;
+    private int readyTime = 0;
 
     /**
      * gets the block name as defined by the arch
@@ -22,11 +26,82 @@ public class Block {
     }
 
     /**
+     * gets the delay
+     * @return
+     */
+    public int getDelay() {
+        return delay;
+    }
+
+    /**
+     * gets the slack
+     * @return
+     */
+    public int getSlack() {
+        return slack;
+    }
+
+    /**
+     * gets the ready time
+     * @return
+     */
+    public int getReadyTime() {
+        return getReadyTime;
+    }
+
+    /**
+     * gets the required time
+     * @return
+     */
+    public int getRequiredTime() {
+        return getRequiredTime;
+    }
+
+    /**
      * sets the name
      * @param name name
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * sets the delay
+     * @param delay delay
+     */
+    public void setDelay(int delay) {
+        this.delay = delay;
+    }
+
+    /**
+     * adds delay
+     * @param delay delay
+     */
+    public void addDelay(int delay) {
+        this.delay += delay;
+    }
+
+    /**
+     * sets the slack
+     */
+    public void setSlack(void) {
+        this.slack = this.readyTime - this.requiredTime;
+    }
+
+    /**
+     * sets the readyTime
+     * @param readyTime ready time
+     */
+    public void setReadyTime(int readyTime) {
+        this.readyTime = readyTime;
+    }
+
+    /**
+     * sets the requiredTime
+     * @param requiredTime required time
+     */
+    public void setRequiredTime(int requiredTime) {
+        this.requiredTime = requiredTime;
     }
 
     /**

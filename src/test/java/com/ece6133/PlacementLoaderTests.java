@@ -79,6 +79,17 @@ public class PlacementLoaderTests {
         blocks.get("E").setGated(true);
         blocks.get("F").setGated(true);
 
+        blocks.get("A").setDelay(2);
+        blocks.get("B").setDelay(3);
+        blocks.get("C").setDelay(5);
+        blocks.get("D").setDelay(1);
+        blocks.get("E").setDelay(3);
+        blocks.get("F").setDelay(4);
+
+        blocks.get("D").setRequiredTime(50);
+        blocks.get("E").setRequiredTime(50);
+        blocks.get("F").setRequiredTime(50);
+
         addNet("a-out", "A", new String[]{"A1", "B1"}, blocks);
         addNet("b-out", "B", new String[]{"A1", "B1"}, blocks);
         addNet("c-out", "C", new String[]{"C1", "B1"}, blocks);

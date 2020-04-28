@@ -66,11 +66,46 @@ public class K6DesignModel {
     }
 
     /**
+     * get number of blocks
+     * @return
+     */
+    public int getNumBlocks() {
+        return blocks.size();
+    }
+
+    /**
+     * get slack of block
+     * @param name the string name of the block
+     * @return 
+     */
+    public int getSlack(String name) {
+        return blocks.get(name).getSlack();
+    }
+
+    /**
+     * get array of block names
+     * @return String[] of names
+     */
+    public String[] getBlockNames() {
+        return blocks.keySet().toArray();
+    }
+
+    /**
      * get all input wires
      * @return input wires
      */
     public ArrayList<NetNode> getInputs() {
         return inputs;
+    }
+
+    /**
+     * add delay to block equivalent to block's slack
+     * @param name the string name of the block
+     * @return 
+     */
+    public void addSlackDelay(String name) {
+        int slack = getSlack(name);
+        blocks.get(name).addDelay(slack);
     }
 
     /**
