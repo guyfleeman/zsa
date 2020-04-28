@@ -2,6 +2,9 @@ package com.ece6133.model.tech.k6_n10;
 
 import com.ece6133.model.timing.NetNode;
 
+/**
+ * utility class to help the parser build LUTs
+ */
 public class LutBuilder {
     protected static LutBuilder instance;
 
@@ -9,6 +12,10 @@ public class LutBuilder {
         instance = new LutBuilder();
     }
 
+    /**
+     * gets the singleton instance
+     * @return
+     */
     public static LutBuilder getInstance() {
         return instance;
     }
@@ -18,19 +25,33 @@ public class LutBuilder {
 
     private LutBuilder() {}
 
+    /**
+     * resets the interative parse build
+     */
     public void resetBuild() {
         buildActive = false;
     }
 
+    /**
+     * mark the start of a new instance build
+     */
     public void flagStartBuild() {
         lut = new Lut();
         buildActive = true;
     }
 
+    /**
+     * checks if a build is active
+     * @return
+     */
     public boolean isBuildActive() {
         return buildActive;
     }
 
+    /**
+     * parse an appended line
+     * @param line line
+     */
     public void appendDefLine(String line) {
         if (line.matches("[10-]{1,6}\\s[10]")) {
             //TODO load LUT cfg (prob irrel)
@@ -53,6 +74,10 @@ public class LutBuilder {
         }
     }
 
+    /**
+     * get the constructed instance
+     * @return built LUT
+     */
     public Lut get() {
         return lut;
     }

@@ -12,7 +12,20 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * loads the architecture definition
+ *
+ * includes timing and placement config, subckt defs, and IO
+ */
 public class K6ArchLoader {
+    /**
+     * loads the arch definition
+     * @param archFile arch file
+     * @return the architecture definition
+     * @throws ParserConfigurationException unreachable
+     * @throws IOException file errors
+     * @throws SAXException arch def file XML error
+     */
     public static K6Arch loadArch(final String archFile) throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
@@ -27,11 +40,21 @@ public class K6ArchLoader {
         return archModel;
     }
 
+    /**
+     * breaks down the root element
+     * @param root root el
+     * @param archModel model
+     */
     private static void decomposeRoot(final Element root, K6Arch archModel) {
         NodeList models = root.getElementsByTagName("models");
         decomposeModels((Element) models.item(0), archModel);
     }
 
+    /**
+     * recover models
+     * @param modelsRoot models element root
+     * @param archModel model
+     */
     private static void decomposeModels(final Element modelsRoot, K6Arch archModel) {
         NodeList models = modelsRoot.getElementsByTagName("model");
         for (int i = 0; i < models.getLength(); i++) {
@@ -39,8 +62,13 @@ public class K6ArchLoader {
         }
     }
 
+    /**
+     * parses and loads a subckt model
+     * @param model model el
+     * @param archModel model
+     */
     private static void addModel(final Element model, K6Arch archModel) {
-        K6Model newModel = new K6Model();
+        K6SubcktModel newModel = new K6SubcktModel();
 
         final String name = model.getAttribute("name");
         newModel.setName(name);

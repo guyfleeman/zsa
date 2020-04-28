@@ -1,6 +1,6 @@
 package com.ece6133.model.tech.k6_n10;
 
-import com.ece6133.model.arch.k6_n10.K6Model;
+import com.ece6133.model.arch.k6_n10.K6SubcktModel;
 import com.ece6133.model.timing.NetNode;
 
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Subckt {
     private String name;
     private String typeName;
-    private K6Model backingType = null;
+    private K6SubcktModel backingType = null;
     private ArrayList<PortAssn> inputs = new ArrayList<>();
     private ArrayList<NetNode> inputDrivingNet = new ArrayList<>();
     private ArrayList<PortAssn> outputs = new ArrayList<>();
@@ -64,11 +64,11 @@ public class Subckt {
         this.drivenOutputNets = drivenOutputNets;
     }
 
-    public K6Model getBackingType() {
+    public K6SubcktModel getBackingType() {
         return backingType;
     }
 
-    public void setBackingType(K6Model backingType) {
+    public void setBackingType(K6SubcktModel backingType) {
         this.backingType = backingType;
     }
 }

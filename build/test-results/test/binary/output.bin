@@ -3886,14 +3886,14 @@
 
 
 Coarse Path List: (ct:9)
-(B -> A1[TODO DLY], A1 -> D[TODO DLY], 
-<B -> B1[TODO DLY], B1 -> B2[TODO DLY], B2 -> D[TODO DLY], 
-<B -> B1[TODO DLY], B1 -> B2[TODO DLY], B2 -> E[TODO DLY], 
-(A -> A1[TODO DLY], A1 -> D[TODO DLY], 
-<A -> B1[TODO DLY], B1 -> B2[TODO DLY], B2 -> D[TODO DLY], 
-<A -> B1[TODO DLY], B1 -> B2[TODO DLY], B2 -> E[TODO DLY], 
 (C -> C1[TODO DLY], C1 -> F[TODO DLY], 
 <C -> B1[TODO DLY], B1 -> B2[TODO DLY], B2 -> D[TODO DLY], 
 <C -> B1[TODO DLY], B1 -> B2[TODO DLY], B2 -> E[TODO DLY], 
+(A -> A1[TODO DLY], A1 -> D[TODO DLY], 
+<A -> B1[TODO DLY], B1 -> B2[TODO DLY], B2 -> D[TODO DLY], 
+<A -> B1[TODO DLY], B1 -> B2[TODO DLY], B2 -> E[TODO DLY], 
+(B -> A1[TODO DLY], A1 -> D[TODO DLY], 
+<B -> B1[TODO DLY], B1 -> B2[TODO DLY], B2 -> D[TODO DLY], 
+<B -> B1[TODO DLY], B1 -> B2[TODO DLY], B2 -> E[TODO DLY], 
 
 

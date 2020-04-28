@@ -2,13 +2,24 @@ package com.ece6133.model.timing;
 
 import java.util.ArrayList;
 
+/**
+ * list of coarse paths. A wrapper for printing, debugging, and type management
+ */
 public class CoarsePathList {
     private ArrayList<CoarsePath> coarsePaths = new ArrayList<>();
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<CoarsePath> getCoarsePaths() {
         return coarsePaths;
     }
 
+    /**
+     *
+     * @param coarsePaths
+     */
     public void setCoarsePaths(ArrayList<CoarsePath> coarsePaths) {
         this.coarsePaths = coarsePaths;
     }

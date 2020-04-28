@@ -10,6 +10,10 @@ public class SubcktBuilder {
         instance = new SubcktBuilder();
     }
 
+    /**
+     * get singleton instance
+     * @return
+     */
     public static SubcktBuilder getInstance() {
         return instance;
     }
@@ -20,20 +24,35 @@ public class SubcktBuilder {
 
     private SubcktBuilder() {}
 
+    /**
+     * clears an active build
+     */
     public void resetBuild() {
         buildActive = false;
     }
 
+    /**
+     * flag start of a new instance creation
+     * @param arch
+     */
     public void flagStartBuild(final K6Arch arch) {
         this.arch = arch;
         subckt = new Subckt();
         buildActive = true;
     }
 
+    /**
+     * checks if an instance is being built
+     * @return
+     */
     public boolean isBuildActive() {
         return buildActive;
     }
 
+    /**
+     * parses an appended line
+     * @param line
+     */
     public void appendDefLine(String line) {
         int startIndex = 0;
         String[] els = line.split(" ");
@@ -81,6 +100,10 @@ public class SubcktBuilder {
         }
     }
 
+    /**
+     * get the constructed instance
+     * @return
+     */
     public Subckt get() {
         return subckt;
     }

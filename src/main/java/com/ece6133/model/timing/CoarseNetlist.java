@@ -2,19 +2,34 @@ package com.ece6133.model.timing;
 
 import java.util.ArrayList;
 
+/**
+ * a list of coarse nets, mostly a wrapper for printing, debugging, and type management
+ */
 public class CoarseNetlist {
     private ArrayList<CoarseNet> nets = new ArrayList<>();
 
     public CoarseNetlist() {}
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<CoarseNet> getNets() {
         return nets;
     }
 
+    /**
+     *
+     * @param nets
+     */
     public void setNets(ArrayList<CoarseNet> nets) {
         this.nets = nets;
     }
 
+    /**
+     * adds a CoarseNet to the internal list of coarse nets
+     * @param net net to be added
+     */
     public void addCoarseNet(CoarseNet net) {
         this.getNets().add(net);
     }
