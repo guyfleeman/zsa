@@ -220,7 +220,7 @@ public class ZeroSlackTimingModel {
                 cps.setDelta(cps.getSlack());
                 cps.setSlack(0);
                 cps.finalizeSlack();
-                System.out.println("set delta " + cps.getDelta() + " for " + cps);
+                //System.out.println("set delta " + cps.getDelta() + " for " + cps);
             }
         }
     }
