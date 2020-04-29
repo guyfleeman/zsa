@@ -4,7 +4,10 @@ import java.util.ArrayList;
 
 import java.util.Collections;
 
-public class TimingModel {
+/**
+ * contains the zero slack algorithm impl
+ */
+public class ZeroSlackTimingModel {
 
     public static void prepInitialArrivalTimes(K6DesignModel dm) {
         computeInitialArrivalTimes(dm);
@@ -18,6 +21,10 @@ public class TimingModel {
         computeEdgeSlacks(dm);
     }
 
+    /**
+     * runs the zero slack algorithms on a design
+     * @param dm
+     */
     public static void zeroSlack(K6DesignModel dm) {
         computeInitialArrivalTimes(dm);
         computeRequiredArrivalTimes(dm);
@@ -54,6 +61,10 @@ public class TimingModel {
         }
     }
 
+    /**
+     * computes the initial arrival times for the zero slack algorithm
+     * @param dm
+     */
     public static void computeInitialArrivalTimes(K6DesignModel dm) {
         ArrayList<BlockNode> globalSources = new ArrayList<>();
         ArrayList<BlockNode> globalSinks = new ArrayList<>();
@@ -92,6 +103,10 @@ public class TimingModel {
         }
     }
 
+    /**
+     * computes the requires arrival times for the zero slack algorithm
+     * @param dm
+     */
     public static void computeRequiredArrivalTimes(K6DesignModel dm) {
         for (CoarsePath cp: dm.getCoarsePathList().getCoarsePaths()) {
             ArrayList<CoarsePathSegment> revPath = new ArrayList<>(cp.getPathSegments());
@@ -109,6 +124,10 @@ public class TimingModel {
         }
     }
 
+    /**
+     * computes the edge slacks for the zero slack algorithm
+     * @param dm
+     */
     public static void computeEdgeSlacks(K6DesignModel dm) {
         for (CoarsePathSegment cps: dm.getCoarsePathList().getCoarsePathSegments()) {
             cps.setSlack(dm.luBlkNode(cps.getSinkBlock()).getRequiredArrivalTime()
@@ -117,6 +136,11 @@ public class TimingModel {
         }
     }
 
+    /**
+     * checks if a node still has positive slack
+     * @param dm
+     * @return
+     */
     public static boolean hasNodeWithPositiveSlack(K6DesignModel dm) {
         for (BlockNode b: dm.getCoarsePathList().getTimingGraphNodes().values()) {
             if (b.getSlack() > 0) {
@@ -127,6 +151,11 @@ public class TimingModel {
         return false;
     }
 
+    /**
+     * gets the node with the least positive slack
+     * @param dm
+     * @return
+     */
     public static BlockNode getNodeWithLeastPositiveSlack(K6DesignModel dm) {
         BlockNode curLowestNode = null;
         for (BlockNode b: dm.getCoarsePathList().getTimingGraphNodes().values()) {
@@ -140,6 +169,12 @@ public class TimingModel {
         return curLowestNode;
     }
 
+    /**
+     * gets the forward segments for a given node for the zero slack algorithm
+     * @param b
+     * @param dm
+     * @return
+     */
     public static ArrayList<CoarsePathSegment> getFwdSegments(BlockNode b, K6DesignModel dm) {
         ArrayList<CoarsePathSegment> fwdSegs = new ArrayList<>();
         for (CoarsePathSegment cps: dm.getCoarsePathList().getCoarsePathSegments()) {
@@ -156,6 +191,12 @@ public class TimingModel {
         return fwdSegs;
     }
 
+    /**
+     * gets the backward segments for a given node for the zero slack algorithm
+     * @param b
+     * @param dm
+     * @return
+     */
     public static ArrayList<CoarsePathSegment> getRevSegments(BlockNode b, K6DesignModel dm) {
         ArrayList<CoarsePathSegment> fwdSegs = new ArrayList<>();
         for (CoarsePathSegment cps: dm.getCoarsePathList().getCoarsePathSegments()) {
@@ -167,6 +208,10 @@ public class TimingModel {
         return fwdSegs;
     }
 
+    /**
+     * assigns edge deltas for the zero slack algorithm
+     * @param dm
+     */
     public static void assignEdgeDeltas(K6DesignModel dm) {
         for (CoarsePathSegment cps: dm.getCoarsePathList().getCoarsePathSegments()) {
             if (dm.luBlkNode(cps.getSourceBlock()).getSlack() == 0

@@ -168,7 +168,7 @@ public class PlacementLoaderTests {
     @Test
     public void testZeroSlackBuildArrivalTimes() {
         K6DesignModel dm = getTestGraph2();
-        TimingModel.computeInitialArrivalTimes(dm);
+        ZeroSlackTimingModel.computeInitialArrivalTimes(dm);
 
         HashMap<String, BlockNode> blocks = new HashMap<>();
         for (BlockNode b: dm.getCoarsePathList().getTimingGraphNodes().values()) {
@@ -192,8 +192,8 @@ public class PlacementLoaderTests {
     @Test
     public void testZeroSlackBuildRequiredArrivalTimes() {
         K6DesignModel dm = getTestGraph2();
-        TimingModel.computeInitialArrivalTimes(dm);
-        TimingModel.computeRequiredArrivalTimes(dm);
+        ZeroSlackTimingModel.computeInitialArrivalTimes(dm);
+        ZeroSlackTimingModel.computeRequiredArrivalTimes(dm);
 
         HashMap<String, BlockNode> blocks = new HashMap<>();
         for (BlockNode b: dm.getCoarsePathList().getTimingGraphNodes().values()) {
@@ -217,9 +217,9 @@ public class PlacementLoaderTests {
     @Test
     public void testZeroSlackBuildEdgeSlacks() {
         K6DesignModel dm = getTestGraph2();
-        TimingModel.computeInitialArrivalTimes(dm);
-        TimingModel.computeRequiredArrivalTimes(dm);
-        TimingModel.computeEdgeSlacks(dm);
+        ZeroSlackTimingModel.computeInitialArrivalTimes(dm);
+        ZeroSlackTimingModel.computeRequiredArrivalTimes(dm);
+        ZeroSlackTimingModel.computeEdgeSlacks(dm);
 
         HashMap<String, CoarsePathSegment> mappedCps = new HashMap<>();
         for (CoarsePathSegment cps: dm.getCoarsePathList().getCoarsePathSegments()) {
@@ -244,7 +244,7 @@ public class PlacementLoaderTests {
     @Test
     public void testZeroSlackProducesZeroSlack() {
         K6DesignModel dm = getTestGraph2();
-        TimingModel.zeroSlack(dm);
+        ZeroSlackTimingModel.zeroSlack(dm);
 
         for (CoarsePathSegment cps: dm.getCoarsePathList().getCoarsePathSegments()) {
             assert(cps.getSlack() == 0);
@@ -257,7 +257,7 @@ public class PlacementLoaderTests {
     @Test
     public void testZeroSlackInternalDeltas() {
         K6DesignModel dm = getTestGraph2();
-        TimingModel.zeroSlack(dm);
+        ZeroSlackTimingModel.zeroSlack(dm);
 
         for (CoarsePathSegment cps: dm.getCoarsePathList().getCoarsePathSegments()) {
             assert(cps.getSlack() == 0);
