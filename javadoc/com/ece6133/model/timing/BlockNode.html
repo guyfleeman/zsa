@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -179,47 +179,97 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getArrivalTime()">getArrivalTime</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="Block.html" title="class in com.ece6133.model.timing">Block</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBlock()">getBlock</a></span>()</code></th>
 <td class="colLast">
 <div class="block">gets the backing block</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDelay()">getDelay</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.util.ArrayList&lt;<a href="CoarsePath.html" title="class in com.ece6133.model.timing">CoarsePath</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDownstreamPaths()">getDownstreamPaths</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>java.util.ArrayList&lt;<a href="BlockNode.html" title="class in com.ece6133.model.timing">BlockNode</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getImmediateDownstreamBlocks()">getImmediateDownstreamBlocks</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.util.ArrayList&lt;<a href="BlockNode.html" title="class in com.ece6133.model.timing">BlockNode</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getImmediateUpstreamBlocks()">getImmediateUpstreamBlocks</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRequiredArrivalTime()">getRequiredArrivalTime</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSlack()">getSlack</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isSink()">isSink</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isSource()">isSource</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setArrivalTime(int)">setArrivalTime</a></span>&#8203;(int&nbsp;arrivalTime)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setBlock(com.ece6133.model.timing.Block)">setBlock</a></span>&#8203;(<a href="Block.html" title="class in com.ece6133.model.timing">Block</a>&nbsp;block)</code></th>
 <td class="colLast">
 <div class="block">sets the backing block</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i12" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDelay(int)">setDelay</a></span>&#8203;(int&nbsp;delay)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDownstreamPaths(java.util.ArrayList)">setDownstreamPaths</a></span>&#8203;(java.util.ArrayList&lt;<a href="CoarsePath.html" title="class in com.ece6133.model.timing">CoarsePath</a>&gt;&nbsp;downstreamPaths)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setImmediateDownstreamBlocks(java.util.ArrayList)">setImmediateDownstreamBlocks</a></span>&#8203;(java.util.ArrayList&lt;<a href="BlockNode.html" title="class in com.ece6133.model.timing">BlockNode</a>&gt;&nbsp;immediateDownstreamBlocks)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setImmediateUpstreamBlocks(java.util.ArrayList)">setImmediateUpstreamBlocks</a></span>&#8203;(java.util.ArrayList&lt;<a href="BlockNode.html" title="class in com.ece6133.model.timing">BlockNode</a>&gt;&nbsp;immediateUpstreamBlocks)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i16" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRequiredArrivalTime(int)">setRequiredArrivalTime</a></span>&#8203;(int&nbsp;requiredArrivalTime)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i17" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSlack(int)">setSlack</a></span>&#8203;(int&nbsp;slack)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -363,7 +413,7 @@ extends java.lang.Object</pre>
 <a id="setDownstreamPaths(java.util.ArrayList)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>setDownstreamPaths</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setDownstreamPaths&#8203;(java.util.ArrayList&lt;<a href="CoarsePath.html" title="class in com.ece6133.model.timing">CoarsePath</a>&gt;&nbsp;downstreamPaths)</pre>
@@ -371,6 +421,96 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>downstreamPaths</code> - </dd>
 </dl>
+</li>
+</ul>
+<a id="getRequiredArrivalTime()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getRequiredArrivalTime</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;getRequiredArrivalTime()</pre>
+</li>
+</ul>
+<a id="setRequiredArrivalTime(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setRequiredArrivalTime</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setRequiredArrivalTime&#8203;(int&nbsp;requiredArrivalTime)</pre>
+</li>
+</ul>
+<a id="getArrivalTime()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getArrivalTime</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;getArrivalTime()</pre>
+</li>
+</ul>
+<a id="setArrivalTime(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setArrivalTime</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setArrivalTime&#8203;(int&nbsp;arrivalTime)</pre>
+</li>
+</ul>
+<a id="getSlack()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSlack</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;getSlack()</pre>
+</li>
+</ul>
+<a id="setSlack(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setSlack</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setSlack&#8203;(int&nbsp;slack)</pre>
+</li>
+</ul>
+<a id="getDelay()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getDelay</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;getDelay()</pre>
+</li>
+</ul>
+<a id="setDelay(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setDelay</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setDelay&#8203;(int&nbsp;delay)</pre>
+</li>
+</ul>
+<a id="isSource()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isSource</h4>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;isSource()</pre>
+</li>
+</ul>
+<a id="isSink()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>isSink</h4>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;isSink()</pre>
 </li>
 </ul>
 </li>

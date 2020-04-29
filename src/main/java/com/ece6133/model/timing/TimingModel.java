@@ -1,117 +1,182 @@
 package com.ece6133.model.timing;
 
+import java.util.ArrayList;
+
+import java.util.Collections;
+
 public class TimingModel {
 
-    public static void greedyZeroSlack() {
-        K6DesignModel dm = loadModel();
-        K6DesignModelLoader.mapPlacements(dm.getBlocks(), dm.getPlInfo());
-        CoarseNetlist cnl = K6DesignModelLoader.buildCoarseNetlist(dm.getBlocks());
-        CoarsePathList cpl = K6DesignModelLoader.recoverPaths(cnl, dm.getBlocks());
+    public static void prepInitialArrivalTimes(K6DesignModel dm) {
+        computeInitialArrivalTimes(dm);
+    }
 
-        HashMap<String, Block> blocks = dm.getBlocks();
-        String[] blockNames = dm.getBlockNames();
+    public static void prepRequiredArrivalTimes(K6DesignModel dm) {
+        computeRequiredArrivalTimes(dm);
+    }
 
-        int slackMin = Integer.MAX_VALUE;
-        int numComponents = dm.getNumBlocks();
+    public static void prepEdgeSlacks(K6DesignModel dm) {
+        computeEdgeSlacks(dm);
+    }
 
-        int i = 0;
-        while (i < numComponents) {
-            computeSlacks(dm, cpl);
+    public static void zeroSlack(K6DesignModel dm) {
+        computeInitialArrivalTimes(dm);
+        computeRequiredArrivalTimes(dm);
+        computeEdgeSlacks(dm);
 
-            while (i < numComponents && dm.getSlack(blockNames[i]) == 0) {
-                i++;
+        while (hasNodeWithPositiveSlack(dm)) {
+            BlockNode leastPosSlack = getNodeWithLeastPositiveSlack(dm);
+            ArrayList<CoarsePathSegment> fwdSegs = getFwdSegments(leastPosSlack, dm);
+            ArrayList<CoarsePathSegment> bakSegs = getRevSegments(leastPosSlack, dm);
+            int fwdAdj = bakSegs.isEmpty() ? leastPosSlack.getSlack() : (int) Math.ceil((float) leastPosSlack.getSlack() / 2.0f);
+            int bakAdj = fwdSegs.isEmpty() ? leastPosSlack.getSlack() : (int) Math.floor((float) leastPosSlack.getSlack() / 2.0f);
+            for (CoarsePathSegment cps: fwdSegs) {
+                if (cps.isFinalized()) {
+                    continue;
+                }
+
+                cps.setSlack(cps.getSlack() - fwdAdj);
+                BlockNode sink = dm.luBlkNode(cps.getSinkBlock());
+                if (sink.getSlack() > 0) {
+                    sink.setSlack(sink.getSlack() - fwdAdj);
+                }
             }
 
-            if (i < numComponents) {
-                dm.addSlackDelay(blockNames[i]); // Add delay to block equivalent to block's slack
+            for (CoarsePathSegment cps: bakSegs) {
+                if (cps.isFinalized()) {
+                    continue;
+                }
+
+                cps.setSlack(cps.getSlack() - bakAdj);
+            }
+
+            leastPosSlack.setSlack(0);
+            assignEdgeDeltas(dm);
+        }
+    }
+
+    public static void computeInitialArrivalTimes(K6DesignModel dm) {
+        ArrayList<BlockNode> globalSources = new ArrayList<>();
+        ArrayList<BlockNode> globalSinks = new ArrayList<>();
+        for (BlockNode b: dm.getCoarsePathList().getTimingGraphNodes().values()) {
+            if (b.isSource()) {
+                globalSources.add(b);
+            } else if (b.isSink()) {
+                globalSinks.add(b);
+            }
+        }
+
+        for (BlockNode b: globalSources) {
+            for (CoarsePath cp: b.getDownstreamPaths()) {
+                for (CoarsePathSegment cps: cp.getPathSegments()) {
+                    BlockNode curNode = dm.getCoarsePathList().getTimingGraphNodes().get(cps.getSourceBlock());
+                    BlockNode nextNode = dm.getCoarsePathList().getTimingGraphNodes().get(cps.getSinkBlock());
+                    int segDelayContrib = (int) cps.getDelay();
+                    int curPathAT = curNode.getArrivalTime() + segDelayContrib;
+                    int curNextNodeAT = nextNode.getArrivalTime();
+                    if (curPathAT > curNextNodeAT) {
+                        nextNode.setArrivalTime(curPathAT);
+                    }
+                }
+            }
+        }
+
+        int largestSinkAT = 0;
+        for (BlockNode sink: globalSinks) {
+            if (sink.getArrivalTime() > largestSinkAT) {
+                largestSinkAT = sink.getArrivalTime();
+            }
+        }
+
+        for (BlockNode sink: globalSinks) {
+            sink.setRequiredArrivalTime(largestSinkAT);
+        }
+    }
+
+    public static void computeRequiredArrivalTimes(K6DesignModel dm) {
+        for (CoarsePath cp: dm.getCoarsePathList().getCoarsePaths()) {
+            ArrayList<CoarsePathSegment> revPath = new ArrayList<>(cp.getPathSegments());
+            Collections.reverse(revPath);
+            for (CoarsePathSegment cps: revPath) {
+                BlockNode curNode = dm.getCoarsePathList().getTimingGraphNodes().get(cps.getSinkBlock());
+                BlockNode nextNode = dm.getCoarsePathList().getTimingGraphNodes().get(cps.getSourceBlock());
+                int segDelayContrib = (int) cps.getDelay();
+                int curPathReqAT = curNode.getRequiredArrivalTime() - segDelayContrib;
+                int curNextNodeReqAT = nextNode.getRequiredArrivalTime();
+                if (curPathReqAT < curNextNodeReqAT) {
+                    nextNode.setRequiredArrivalTime(curPathReqAT);
+                }
             }
         }
     }
 
-    public static void computeSlacks(K6DesignModel dm, CoarsePathList cpl) {
-        ArrayList<CoarsePath> coarsePaths = cpl.getCoarsePaths();
-        for (CoarsePath path : coarsePaths) {
-            ArrayList<CoarsePathSegment> segments = path.getPathSegments();
-
-            // Get data ready time
-            for (CoarsePathSegment segment : segments) {
-                Block source = segment.getSourceBlock();
-                Block sink = segment.getSinkBlock();
-
-                int sinkReadyTime = sink.getReadyTime();
-                int sourceReadyTime = source.getReadyTime();
-                if (sourceReadyTime + source.getDelay() > sinkReadyTime)
-                    sink.setReadyTime(sourceReadyTime + source.getDelay());
-            }
-
-            // Get data required time
-            ListIterator li = segments.listIterator(segments.size());
-            while (li.hasPrevious()) {
-                Block source = segment.getSourceBlock();
-                Block sink = segment.getSinkBlock();
-
-                int sourceRequiredTime = source.getRequiredTime();
-                int sinkRequiredTime = sink.getRequiredTime();
-                if (sinkRequiredTime - source.getDelay() < sourceRequiredTime)
-                    source.setRequiredTime(sinkRequiredTime - source.getDelay());
-            }
-        }
-
-        // Compute slacks (not very efficient but for testing now)
-        for (String block : dm.getBlocks().keySet()) {
-            dm.getBlocks().get(block).setSlack();
+    public static void computeEdgeSlacks(K6DesignModel dm) {
+        for (CoarsePathSegment cps: dm.getCoarsePathList().getCoarsePathSegments()) {
+            cps.setSlack(dm.luBlkNode(cps.getSinkBlock()).getRequiredArrivalTime()
+                    - dm.luBlkNode(cps.getSourceBlock()).getArrivalTime()
+                    - cps.getDelay());
         }
     }
 
-/*
-    public static void zeroSlack() {
-        int num = getNumComponents();
-        do {
-            computeSlacks();
-            int slackMin = Integer.MAX_VALUE;
-            Node minNode = new Node();
-            getMinPositiveSlack();
+    public static boolean hasNodeWithPositiveSlack(K6DesignModel dm) {
+        for (BlockNode b: dm.getCoarsePathList().getTimingGraphNodes().values()) {
+            if (b.getSlack() > 0) {
+                return true;
+            }
+        }
 
-            for (int i = 0; i < numComponents; i++) {
-                if (slack(nodeI) < slackMin && slack(nodeI) > 0) {
-                    slackMin = slack(nodeI);
-                    minNode = nodeI;
+        return false;
+    }
+
+    public static BlockNode getNodeWithLeastPositiveSlack(K6DesignModel dm) {
+        BlockNode curLowestNode = null;
+        for (BlockNode b: dm.getCoarsePathList().getTimingGraphNodes().values()) {
+            if (b.getSlack() > 0) {
+                if (curLowestNode == null || b.getSlack() < curLowestNode.getSlack()) {
+                    curLowestNode = b;
                 }
             }
+        }
 
-            if (slackMin != Integer.MAX_VALUE) {
-                Node a0 = minNode;
-                int v = 0;
-                // Find forward path segment
-                while (x != null) {
-                    // find output called node X where trequired(x) = trequired(a) + delay(x) and tactual(x) = tactual(a) + delay(x)
-                    if (output != null) {
-                        a0 = x; 
-                        v++;
-                    }
-                }
+        return curLowestNode;
+    }
 
-                // Find backward path segment
-                int u = 0;
-                while (x != null) {
-                    // find input called node X where trequired(x) = trequired(a) - delay(x) and tactual(x) = tactual(a) - delay(x)
-                    if (output != null) {
-                        a0 = x; 
-                        u--;
-                    }
-                }
-
-                // Distribute slacks
-                int slack = slackMin;
-                for (int i = u; i < v; i++) {
-                    int slackHat = slack / (v - i + 1);
-                    delay(nodeI) += slackHat;
-                    slack -= slackHat;
-                }
+    public static ArrayList<CoarsePathSegment> getFwdSegments(BlockNode b, K6DesignModel dm) {
+        ArrayList<CoarsePathSegment> fwdSegs = new ArrayList<>();
+        for (CoarsePathSegment cps: dm.getCoarsePathList().getCoarsePathSegments()) {
+            if (cps.isFinalized() || cps.getSlack() == 0) {
+                continue;
             }
 
+            if (dm.luBlkNode(cps.getSourceBlock()) == b) {
+                fwdSegs.add(cps);
+                fwdSegs.addAll(getFwdSegments(dm.luBlkNode(cps.getSinkBlock()), dm));
+            }
+        }
 
-        } while (slackMin != Integer.MAX_VALUE)
-    } */
+        return fwdSegs;
+    }
 
+    public static ArrayList<CoarsePathSegment> getRevSegments(BlockNode b, K6DesignModel dm) {
+        ArrayList<CoarsePathSegment> fwdSegs = new ArrayList<>();
+        for (CoarsePathSegment cps: dm.getCoarsePathList().getCoarsePathSegments()) {
+            if (dm.luBlkNode(cps.getSinkBlock()) == b) {
+                fwdSegs.add(cps);
+            }
+        }
+
+        return fwdSegs;
+    }
+
+    public static void assignEdgeDeltas(K6DesignModel dm) {
+        for (CoarsePathSegment cps: dm.getCoarsePathList().getCoarsePathSegments()) {
+            if (dm.luBlkNode(cps.getSourceBlock()).getSlack() == 0
+                    && dm.luBlkNode(cps.getSinkBlock()).getSlack() == 0
+                    && !cps.isFinalized()) {
+                cps.setDelta(cps.getSlack());
+                cps.setSlack(0);
+                cps.finalizeSlack();
+                System.out.println("set delta " + cps.getDelta() + " for " + cps);
+            }
+        }
+    }
 }

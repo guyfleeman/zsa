@@ -28,8 +28,9 @@ public class CoarsePath {
     @Override
     public String toString() {
         StringBuilder ret = new StringBuilder();
+        ret.append(pathSegments.get(0).getSource().getParent().getName());
         for (CoarsePathSegment cps: pathSegments) {
-            ret.append(cps).append(", ");
+            ret.append("->").append(cps.getSink().getParent().getName());
         }
         return ret.toString();
     }

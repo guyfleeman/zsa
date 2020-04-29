@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -176,76 +176,139 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addDelay(int)">addDelay</a></span>&#8203;(int&nbsp;delay)</code></th>
+<td class="colLast">
+<div class="block">adds delay</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDelay()">getDelay</a></span>()</code></th>
+<td class="colLast">
+<div class="block">gets the delay</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>java.util.HashMap&lt;java.lang.String,&#8203;java.util.ArrayList&lt;java.lang.String&gt;&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputs()">getInputs</a></span>()</code></th>
 <td class="colLast">
 <div class="block">get all input net names</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getName()">getName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">gets the block name as defined by the arch</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>java.util.HashMap&lt;java.lang.String,&#8203;java.util.ArrayList&lt;java.lang.String&gt;&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputs()">getOutputs</a></span>()</code></th>
 <td class="colLast">
 <div class="block">gets output net names</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="PlacementInfo.html" title="class in com.ece6133.model.timing">PlacementInfo</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPlacementInfo()">getPlacementInfo</a></span>()</code></th>
 <td class="colLast">
 <div class="block">gets the placement info</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getReadyTime()">getReadyTime</a></span>()</code></th>
+<td class="colLast">
+<div class="block">gets the ready time</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRequiredTime()">getRequiredTime</a></span>()</code></th>
+<td class="colLast">
+<div class="block">gets the required time</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSlack()">getSlack</a></span>()</code></th>
+<td class="colLast">
+<div class="block">gets the slack</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isGated()">isGated</a></span>()</code></th>
 <td class="colLast">
 <div class="block">returns if the block is gated (e.g.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDelay(int)">setDelay</a></span>&#8203;(int&nbsp;delay)</code></th>
+<td class="colLast">
+<div class="block">sets the delay</div>
+</td>
+</tr>
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setGated(boolean)">setGated</a></span>&#8203;(boolean&nbsp;gated)</code></th>
 <td class="colLast">
 <div class="block">sets if the block is gated</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setInputs(java.util.HashMap)">setInputs</a></span>&#8203;(java.util.HashMap&lt;java.lang.String,&#8203;java.util.ArrayList&lt;java.lang.String&gt;&gt;&nbsp;inputs)</code></th>
 <td class="colLast">
 <div class="block">sets input net names</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setName(java.lang.String)">setName</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
 <div class="block">sets the name</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setOutputs(java.util.HashMap)">setOutputs</a></span>&#8203;(java.util.HashMap&lt;java.lang.String,&#8203;java.util.ArrayList&lt;java.lang.String&gt;&gt;&nbsp;outputs)</code></th>
 <td class="colLast">
 <div class="block">sets output net names</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPlacementInfo(com.ece6133.model.timing.PlacementInfo)">setPlacementInfo</a></span>&#8203;(<a href="PlacementInfo.html" title="class in com.ece6133.model.timing">PlacementInfo</a>&nbsp;placementInfo)</code></th>
 <td class="colLast">
 <div class="block">sets the placement info</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i16" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setReadyTime(int)">setReadyTime</a></span>&#8203;(int&nbsp;readyTime)</code></th>
+<td class="colLast">
+<div class="block">sets the readyTime</div>
+</td>
+</tr>
+<tr id="i17" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRequiredTime(int)">setRequiredTime</a></span>&#8203;(int&nbsp;requiredTime)</code></th>
+<td class="colLast">
+<div class="block">sets the requiredTime</div>
+</td>
+</tr>
+<tr id="i18" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSlack()">setSlack</a></span>()</code></th>
+<td class="colLast">
+<div class="block">sets the slack</div>
+</td>
+</tr>
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -306,6 +369,58 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a id="getDelay()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getDelay</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;getDelay()</pre>
+<div class="block">gets the delay</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+</dl>
+</li>
+</ul>
+<a id="getSlack()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSlack</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;getSlack()</pre>
+<div class="block">gets the slack</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+</dl>
+</li>
+</ul>
+<a id="getReadyTime()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getReadyTime</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;getReadyTime()</pre>
+<div class="block">gets the ready time</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+</dl>
+</li>
+</ul>
+<a id="getRequiredTime()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getRequiredTime</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;getRequiredTime()</pre>
+<div class="block">gets the required time</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+</dl>
+</li>
+</ul>
 <a id="setName(java.lang.String)">
 <!--   -->
 </a>
@@ -317,6 +432,72 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>name</code> - name</dd>
+</dl>
+</li>
+</ul>
+<a id="setDelay(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setDelay</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setDelay&#8203;(int&nbsp;delay)</pre>
+<div class="block">sets the delay</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>delay</code> - delay</dd>
+</dl>
+</li>
+</ul>
+<a id="addDelay(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addDelay</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;addDelay&#8203;(int&nbsp;delay)</pre>
+<div class="block">adds delay</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>delay</code> - delay</dd>
+</dl>
+</li>
+</ul>
+<a id="setSlack()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setSlack</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setSlack()</pre>
+<div class="block">sets the slack</div>
+</li>
+</ul>
+<a id="setReadyTime(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setReadyTime</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setReadyTime&#8203;(int&nbsp;readyTime)</pre>
+<div class="block">sets the readyTime</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>readyTime</code> - ready time</dd>
+</dl>
+</li>
+</ul>
+<a id="setRequiredTime(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setRequiredTime</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setRequiredTime&#8203;(int&nbsp;requiredTime)</pre>
+<div class="block">sets the requiredTime</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>requiredTime</code> - required time</dd>
 </dl>
 </li>
 </ul>

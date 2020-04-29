@@ -5,7 +5,6 @@ import com.ece6133.model.arch.k6_n10.K6Arch;
 import com.ece6133.model.tech.k6_n10.Latch;
 import com.ece6133.model.tech.k6_n10.Lut;
 import com.ece6133.model.tech.k6_n10.Subckt;
-import com.ece6133.model.timing.NetNode;
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,29 +26,29 @@ public class K6DesignModel {
     /**
      * all input wires
      */
-    private ArrayList<NetNode> inputs = new ArrayList<>();
+    private final ArrayList<NetNode> inputs = new ArrayList<>();
 
     /**
      * all output wires
      */
-    private ArrayList<NetNode> outputs = new ArrayList<>();
+    private final ArrayList<NetNode> outputs = new ArrayList<>();
 
     /**
      * all instantiated latches and their configuration
      */
-    private ArrayList<Latch> latches = new ArrayList<>();
+    private final ArrayList<Latch> latches = new ArrayList<>();
 
     /**
      * all instantiated LUTs and their configuration
      */
-    private ArrayList<Lut> luts = new ArrayList<>();
+    private final ArrayList<Lut> luts = new ArrayList<>();
 
     /**
      * all instantiated subcks and their configuration
      *
      * these correspond to hard tile macros
      */
-    private ArrayList<Subckt> subckts = new ArrayList<>();
+    private final ArrayList<Subckt> subckts = new ArrayList<>();
 
     /**
      * all placement info for the design
@@ -60,6 +59,10 @@ public class K6DesignModel {
      * all blocks for the design
      */
     private HashMap<String, Block> blocks;
+
+    private CoarseNetlist coarseNetlist;
+
+    private CoarsePathList coarsePathList;
 
     public K6DesignModel() {
 
@@ -86,8 +89,8 @@ public class K6DesignModel {
      * get array of block names
      * @return String[] of names
      */
-    public String[] getBlockNames() {
-        return blocks.keySet().toArray();
+    public ArrayList<String> getBlockNames() {
+        return new ArrayList<>(blocks.keySet());
     }
 
     /**
@@ -226,5 +229,31 @@ public class K6DesignModel {
      */
     public void setBlocks(HashMap<String, Block> blocks) {
         this.blocks = blocks;
+    }
+
+    /**
+     * netlist
+     */
+    public CoarseNetlist getCoarseNetlist() {
+        return coarseNetlist;
+    }
+
+    public void setCoarseNetlist(CoarseNetlist coarseNetlist) {
+        this.coarseNetlist = coarseNetlist;
+    }
+
+    /**
+     * pathlist
+     */
+    public CoarsePathList getCoarsePathList() {
+        return coarsePathList;
+    }
+
+    public void setCoarsePathList(CoarsePathList coarsePathList) {
+        this.coarsePathList = coarsePathList;
+    }
+
+    public BlockNode luBlkNode(Block b) {
+        return this.coarsePathList.getTimingGraphNodes().get(b);
     }
 }

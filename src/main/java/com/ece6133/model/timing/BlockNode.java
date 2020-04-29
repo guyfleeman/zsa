@@ -12,6 +12,11 @@ public class BlockNode {
     private ArrayList<BlockNode> immediateDownstreamBlocks = new ArrayList<>();
     private ArrayList<CoarsePath> downstreamPaths = new ArrayList<>();
 
+    private int arrivalTime = 0;
+    private int requiredArrivalTime = Integer.MAX_VALUE;
+    private int slack = 0;
+    private int delay = 0;
+
     /**
      * creates a blocknode from a block
      * @param b contained block
@@ -82,5 +87,47 @@ public class BlockNode {
      */
     public void setDownstreamPaths(ArrayList<CoarsePath> downstreamPaths) {
         this.downstreamPaths = downstreamPaths;
+    }
+
+    public int getRequiredArrivalTime() {
+        return requiredArrivalTime;
+    }
+
+    public void setRequiredArrivalTime(int requiredArrivalTime) {
+        this.requiredArrivalTime = requiredArrivalTime;
+        setSlack(this.requiredArrivalTime - this.arrivalTime);
+    }
+
+    public int getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public void setArrivalTime(int arrivalTime) {
+        this.arrivalTime = arrivalTime;
+        setSlack(this.requiredArrivalTime - this.arrivalTime);
+    }
+
+    public int getSlack() {
+        return slack;
+    }
+
+    public void setSlack(int slack) {
+        this.slack = slack;
+    }
+
+    public int getDelay() {
+        return delay;
+    }
+
+    public void setDelay(int delay) {
+        this.delay = delay;
+    }
+
+    public boolean isSource() {
+        return this.immediateUpstreamBlocks.isEmpty();
+    }
+
+    public boolean isSink() {
+        return this.immediateDownstreamBlocks.isEmpty();
     }
 }

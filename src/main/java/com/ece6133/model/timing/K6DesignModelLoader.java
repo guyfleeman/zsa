@@ -555,6 +555,8 @@ public class K6DesignModelLoader {
         ArrayList<CoarsePath> gatedCoarsePaths = buildCoarsePathsFromGraph(timingGraph, coarsePathSegments);
 
         CoarsePathList cpl = new CoarsePathList();
+        cpl.setTimingGraphNodes(timingGraph);
+        cpl.getCoarsePathSegments().addAll(coarsePathSegments);
         cpl.getCoarsePaths().addAll(gatedCoarsePaths);
 
         return cpl;

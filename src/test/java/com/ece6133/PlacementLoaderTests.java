@@ -65,7 +65,7 @@ public class PlacementLoaderTests {
      * make small scale test graph
      * @return test graph
      */
-    public K6DesignModel getTestGraph() {
+    public K6DesignModel getTestGraph1() {
         String[] names = {"A", "A1", "B", "B1", "B2", "C", "C1", "D", "E", "F"};
         HashMap<String, Block> blocks = new HashMap<>();
         for (String n: names) {
@@ -104,11 +104,186 @@ public class PlacementLoaderTests {
     }
 
     /**
+     * make small scale test graph
+     * @return test graph
+     */
+    public K6DesignModel getTestGraph2() {
+        String[] names = {"A", "B", "C", "D", "E", "F", "G", "H", "I"};
+        HashMap<String, Block> blocks = new HashMap<>();
+        for (String n: names) {
+            blocks.put(n, makeFakeBlock(n, false));
+        }
+
+        blocks.get("A").setGated(true);
+        blocks.get("B").setGated(true);
+        blocks.get("I").setGated(true);
+        blocks.get("G").setGated(true);
+        blocks.get("H").setGated(true);
+
+        addNet("a-out", "A", new String[]{"C"}, blocks);
+        addNet("b-out", "B", new String[]{"C", "D"}, blocks);
+        addNet("c-out", "C", new String[]{"E", "F"}, blocks);
+        addNet("d-out", "D", new String[]{"F"}, blocks);
+        addNet("e-out", "E", new String[]{"I", "G"}, blocks);
+        addNet("f-out", "F", new String[]{"G", "H"}, blocks);
+
+        K6DesignModel dm = new K6DesignModel();
+        dm.setBlocks(blocks);
+
+        primitiveBuildInternals(dm);
+
+        HashMap<String, CoarsePathSegment> mappedCps = new HashMap<>();
+        for (CoarsePathSegment cps: dm.getCoarsePathList().getCoarsePathSegments()) {
+            mappedCps.put(cps.toString(), cps);
+        }
+
+        mappedCps.get("A->C").setDelay(12);
+        mappedCps.get("B->C").setDelay(24);
+        mappedCps.get("B->D").setDelay(24);
+        mappedCps.get("C->E").setDelay(24);
+        mappedCps.get("C->F").setDelay(24);
+        mappedCps.get("D->F").setDelay(36);
+        mappedCps.get("E->I").setDelay(12);
+        mappedCps.get("E->G").setDelay(24);
+        mappedCps.get("F->G").setDelay(36);
+        mappedCps.get("F->H").setDelay(24);
+
+        return dm;
+    }
+
+    /**
+     *
+     * @param dm
+     */
+    public void primitiveBuildInternals(final K6DesignModel dm) {
+        CoarseNetlist cnl = K6DesignModelLoader.buildCoarseNetlist(dm.getBlocks());
+        CoarsePathList cpl = K6DesignModelLoader.recoverPaths(cnl, dm.getBlocks());
+        dm.setCoarseNetlist(cnl);
+        dm.setCoarsePathList(cpl);
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void testZeroSlackBuildArrivalTimes() {
+        K6DesignModel dm = getTestGraph2();
+        TimingModel.computeInitialArrivalTimes(dm);
+
+        HashMap<String, BlockNode> blocks = new HashMap<>();
+        for (BlockNode b: dm.getCoarsePathList().getTimingGraphNodes().values()) {
+            blocks.put(b.getBlock().getName(), b);
+        }
+
+        assert(blocks.get("A").getArrivalTime() == 0);
+        assert(blocks.get("B").getArrivalTime() == 0);
+        assert(blocks.get("C").getArrivalTime() == 24);
+        assert(blocks.get("D").getArrivalTime() == 24);
+        assert(blocks.get("E").getArrivalTime() == 48);
+        assert(blocks.get("F").getArrivalTime() == 60);
+        assert(blocks.get("G").getArrivalTime() == 96);
+        assert(blocks.get("H").getArrivalTime() == 84);
+        assert(blocks.get("I").getArrivalTime() == 60);
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void testZeroSlackBuildRequiredArrivalTimes() {
+        K6DesignModel dm = getTestGraph2();
+        TimingModel.computeInitialArrivalTimes(dm);
+        TimingModel.computeRequiredArrivalTimes(dm);
+
+        HashMap<String, BlockNode> blocks = new HashMap<>();
+        for (BlockNode b: dm.getCoarsePathList().getTimingGraphNodes().values()) {
+            blocks.put(b.getBlock().getName(), b);
+        }
+
+        assert(blocks.get("A").getRequiredArrivalTime() == 24);
+        assert(blocks.get("B").getRequiredArrivalTime() == 0);
+        assert(blocks.get("C").getRequiredArrivalTime() == 36);
+        assert(blocks.get("D").getRequiredArrivalTime() == 24);
+        assert(blocks.get("E").getRequiredArrivalTime() == 72);
+        assert(blocks.get("F").getRequiredArrivalTime() == 60);
+        assert(blocks.get("G").getRequiredArrivalTime() == 96);
+        assert(blocks.get("H").getRequiredArrivalTime() == 96);
+        assert(blocks.get("I").getRequiredArrivalTime() == 96);
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void testZeroSlackBuildEdgeSlacks() {
+        K6DesignModel dm = getTestGraph2();
+        TimingModel.computeInitialArrivalTimes(dm);
+        TimingModel.computeRequiredArrivalTimes(dm);
+        TimingModel.computeEdgeSlacks(dm);
+
+        HashMap<String, CoarsePathSegment> mappedCps = new HashMap<>();
+        for (CoarsePathSegment cps: dm.getCoarsePathList().getCoarsePathSegments()) {
+            mappedCps.put(cps.toString(), cps);
+        }
+
+        assert(mappedCps.get("A->C").getSlack() == 24);
+        assert(mappedCps.get("B->C").getSlack() == 12);
+        assert(mappedCps.get("B->D").getSlack() == 0);
+        assert(mappedCps.get("C->E").getSlack() == 24);
+        assert(mappedCps.get("C->F").getSlack() == 12);
+        assert(mappedCps.get("D->F").getSlack() == 0);
+        assert(mappedCps.get("E->I").getSlack() == 36);
+        assert(mappedCps.get("E->G").getSlack() == 24);
+        assert(mappedCps.get("F->G").getSlack() == 0);
+        assert(mappedCps.get("F->H").getSlack() == 12);
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void testZeroSlackProducesZeroSlack() {
+        K6DesignModel dm = getTestGraph2();
+        TimingModel.zeroSlack(dm);
+
+        for (CoarsePathSegment cps: dm.getCoarsePathList().getCoarsePathSegments()) {
+            assert(cps.getSlack() == 0);
+        }
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void testZeroSlackInternalDeltas() {
+        K6DesignModel dm = getTestGraph2();
+        TimingModel.zeroSlack(dm);
+
+        for (CoarsePathSegment cps: dm.getCoarsePathList().getCoarsePathSegments()) {
+            assert(cps.getSlack() == 0);
+        }
+
+        HashMap<String, CoarsePathSegment> mappedCps = new HashMap<>();
+        for (CoarsePathSegment cps: dm.getCoarsePathList().getCoarsePathSegments()) {
+            mappedCps.put(cps.toString(), cps);
+        }
+
+        assert(mappedCps.get("B->C").getDelta() == 6);
+        assert(mappedCps.get("B->D").getDelta() == 0);
+        assert(mappedCps.get("C->E").getDelta() == 9);
+        assert(mappedCps.get("C->F").getDelta() == 6);
+        assert(mappedCps.get("D->F").getDelta() == 0);
+        assert(mappedCps.get("E->G").getDelta() == 9);
+        assert(mappedCps.get("F->G").getDelta() == 0);
+        assert(mappedCps.get("F->H").getDelta() == 0);
+    }
+
+    /**
      * test small scale primitive netlist recovery
      */
     @Test
     public void primitiveNetlist() {
-        K6DesignModel dm = getTestGraph();
+        K6DesignModel dm = getTestGraph1();
 
         CoarseNetlist cnl = K6DesignModelLoader.buildCoarseNetlist(dm.getBlocks());
         System.out.println(cnl);
@@ -120,7 +295,7 @@ public class PlacementLoaderTests {
      */
     @Test
     public void primitiveCoarsePathList() {
-        K6DesignModel dm = getTestGraph();
+        K6DesignModel dm = getTestGraph1();
 
         CoarseNetlist cnl = K6DesignModelLoader.buildCoarseNetlist(dm.getBlocks());
         CoarsePathList cpl = K6DesignModelLoader.recoverPaths(cnl, dm.getBlocks());

@@ -41,7 +41,7 @@ task copyTestResources(type: Copy) {
 
 test{
     minHeapSize = "128m"
-    maxHeapSize = "1G"
+    maxHeapSize = "4G"
 }
 
 processTestResources.dependsOn copyTestResources

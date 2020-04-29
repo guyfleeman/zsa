@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -177,68 +177,98 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>float</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRcRteDelay()">getRcRteDelay</a></span>()</code></th>
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#finalizeSlack()">finalizeSlack</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDelay()">getDelay</a></span>()</code></th>
 <td class="colLast">
 <div class="block">get the RC delay estimate for the segment</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDelta()">getDelta</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRlDist()">getRlDist</a></span>()</code></th>
 <td class="colLast">
 <div class="block">gets the rectiliniear distance between source and sink for the path</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="NetNode.html" title="class in com.ece6133.model.timing">NetNode</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSink()">getSink</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="Block.html" title="class in com.ece6133.model.timing">Block</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSinkBlock()">getSinkBlock</a></span>()</code></th>
 <td class="colLast">
 <div class="block">get the block driven by the segment</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSlack()">getSlack</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="NetNode.html" title="class in com.ece6133.model.timing">NetNode</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSource()">getSource</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="Block.html" title="class in com.ece6133.model.timing">Block</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceBlock()">getSourceBlock</a></span>()</code></th>
 <td class="colLast">
 <div class="block">get the block driving the segment</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isFinalized()">isFinalized</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRcRteDelay(float)">setRcRteDelay</a></span>&#8203;(float&nbsp;rcRteDelay)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDelay(int)">setDelay</a></span>&#8203;(int&nbsp;delay)</code></th>
 <td class="colLast">
 <div class="block">set the RC delay estimate for the segment</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDelta(int)">setDelta</a></span>&#8203;(int&nbsp;delta)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRlDist(int)">setRlDist</a></span>&#8203;(int&nbsp;rlDist)</code></th>
 <td class="colLast">
 <div class="block">sets the rectilinear distance between the source and the sink for the path</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSink(com.ece6133.model.timing.NetNode)">setSink</a></span>&#8203;(<a href="NetNode.html" title="class in com.ece6133.model.timing">NetNode</a>&nbsp;sink)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i14" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSlack(int)">setSlack</a></span>&#8203;(int&nbsp;slack)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSource(com.ece6133.model.timing.NetNode)">setSource</a></span>&#8203;(<a href="NetNode.html" title="class in com.ece6133.model.timing">NetNode</a>&nbsp;source)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -391,37 +421,37 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="getRcRteDelay()">
+<a id="getDelay()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getRcRteDelay</h4>
-<pre class="methodSignature">public&nbsp;float&nbsp;getRcRteDelay()</pre>
+<h4>getDelay</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;getDelay()</pre>
 <div class="block">get the RC delay estimate for the segment</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 </dl>
 </li>
 </ul>
-<a id="setRcRteDelay(float)">
+<a id="setDelay(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>setRcRteDelay</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setRcRteDelay&#8203;(float&nbsp;rcRteDelay)</pre>
+<h4>setDelay</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setDelay&#8203;(int&nbsp;delay)</pre>
 <div class="block">set the RC delay estimate for the segment</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>rcRteDelay</code> - </dd>
+<dd><code>delay</code> - </dd>
 </dl>
 </li>
 </ul>
 <a id="toString()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>toString</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toString()</pre>
@@ -429,6 +459,60 @@ extends java.lang.Object</pre>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>toString</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
 </dl>
+</li>
+</ul>
+<a id="getSlack()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSlack</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;getSlack()</pre>
+</li>
+</ul>
+<a id="setSlack(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setSlack</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setSlack&#8203;(int&nbsp;slack)</pre>
+</li>
+</ul>
+<a id="getDelta()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getDelta</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;getDelta()</pre>
+</li>
+</ul>
+<a id="setDelta(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setDelta</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setDelta&#8203;(int&nbsp;delta)</pre>
+</li>
+</ul>
+<a id="finalizeSlack()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>finalizeSlack</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;finalizeSlack()</pre>
+</li>
+</ul>
+<a id="isFinalized()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>isFinalized</h4>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;isFinalized()</pre>
 </li>
 </ul>
 </li>

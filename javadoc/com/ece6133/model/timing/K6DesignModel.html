@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -205,82 +205,139 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addSlackDelay(java.lang.String)">addSlackDelay</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
+<td class="colLast">
+<div class="block">add delay to block equivalent to block's slack</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addSubckt(com.ece6133.model.tech.k6_n10.Subckt)">addSubckt</a></span>&#8203;(<a href="../tech/k6_n10/Subckt.html" title="class in com.ece6133.model.tech.k6_n10">Subckt</a>&nbsp;newSubckt)</code></th>
 <td class="colLast">
 <div class="block">add a subckt to the list of subckts</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>java.util.ArrayList&lt;java.lang.String&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBlockNames()">getBlockNames</a></span>()</code></th>
+<td class="colLast">
+<div class="block">get array of block names</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.util.HashMap&lt;java.lang.String,&#8203;<a href="Block.html" title="class in com.ece6133.model.timing">Block</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBlocks()">getBlocks</a></span>()</code></th>
 <td class="colLast">
 <div class="block">get all blocks</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
+<td class="colFirst"><code><a href="CoarseNetlist.html" title="class in com.ece6133.model.timing">CoarseNetlist</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCoarseNetlist()">getCoarseNetlist</a></span>()</code></th>
+<td class="colLast">
+<div class="block">netlist</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code><a href="CoarsePathList.html" title="class in com.ece6133.model.timing">CoarsePathList</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCoarsePathList()">getCoarsePathList</a></span>()</code></th>
+<td class="colLast">
+<div class="block">pathlist</div>
+</td>
+</tr>
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>java.util.ArrayList&lt;<a href="NetNode.html" title="class in com.ece6133.model.timing">NetNode</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputs()">getInputs</a></span>()</code></th>
 <td class="colLast">
 <div class="block">get all input wires</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.util.ArrayList&lt;<a href="../tech/k6_n10/Latch.html" title="class in com.ece6133.model.tech.k6_n10">Latch</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLatches()">getLatches</a></span>()</code></th>
 <td class="colLast">
 <div class="block">get all latches</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>java.util.ArrayList&lt;<a href="../tech/k6_n10/Lut.html" title="class in com.ece6133.model.tech.k6_n10">Lut</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLuts()">getLuts</a></span>()</code></th>
 <td class="colLast">
 <div class="block">get all LUTs</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getName()">getName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">get the design name</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i14" class="altColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNumBlocks()">getNumBlocks</a></span>()</code></th>
+<td class="colLast">
+<div class="block">get number of blocks</div>
+</td>
+</tr>
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>java.util.ArrayList&lt;<a href="NetNode.html" title="class in com.ece6133.model.timing">NetNode</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputs()">getOutputs</a></span>()</code></th>
 <td class="colLast">
 <div class="block">get all output wires</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>java.util.HashMap&lt;java.lang.String,&#8203;<a href="PlacementInfo.html" title="class in com.ece6133.model.timing">PlacementInfo</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPlInfo()">getPlInfo</a></span>()</code></th>
 <td class="colLast">
 <div class="block">get all placement info</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i17" class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSlack(java.lang.String)">getSlack</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
+<td class="colLast">
+<div class="block">get slack of block</div>
+</td>
+</tr>
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>java.util.ArrayList&lt;<a href="../tech/k6_n10/Subckt.html" title="class in com.ece6133.model.tech.k6_n10">Subckt</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSubckts()">getSubckts</a></span>()</code></th>
 <td class="colLast">
 <div class="block">get all subckts (hard tile macros) for the design</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i19" class="rowColor">
+<td class="colFirst"><code><a href="BlockNode.html" title="class in com.ece6133.model.timing">BlockNode</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#luBlkNode(com.ece6133.model.timing.Block)">luBlkNode</a></span>&#8203;(<a href="Block.html" title="class in com.ece6133.model.timing">Block</a>&nbsp;b)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setBlocks(java.util.HashMap)">setBlocks</a></span>&#8203;(java.util.HashMap&lt;java.lang.String,&#8203;<a href="Block.html" title="class in com.ece6133.model.timing">Block</a>&gt;&nbsp;blocks)</code></th>
 <td class="colLast">
 <div class="block">set blocks</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i21" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCoarseNetlist(com.ece6133.model.timing.CoarseNetlist)">setCoarseNetlist</a></span>&#8203;(<a href="CoarseNetlist.html" title="class in com.ece6133.model.timing">CoarseNetlist</a>&nbsp;coarseNetlist)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i22" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCoarsePathList(com.ece6133.model.timing.CoarsePathList)">setCoarsePathList</a></span>&#8203;(<a href="CoarsePathList.html" title="class in com.ece6133.model.timing">CoarsePathList</a>&nbsp;coarsePathList)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setName(java.lang.String)">setName</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
 <div class="block">set the design name</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPlInfo(java.util.HashMap)">setPlInfo</a></span>&#8203;(java.util.HashMap&lt;java.lang.String,&#8203;<a href="PlacementInfo.html" title="class in com.ece6133.model.timing">PlacementInfo</a>&gt;&nbsp;plInfo)</code></th>
 <td class="colLast">
@@ -330,6 +387,48 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="getNumBlocks()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getNumBlocks</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;getNumBlocks()</pre>
+<div class="block">get number of blocks</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+</dl>
+</li>
+</ul>
+<a id="getSlack(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSlack</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;getSlack&#8203;(java.lang.String&nbsp;name)</pre>
+<div class="block">get slack of block</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - the string name of the block</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+</dl>
+</li>
+</ul>
+<a id="getBlockNames()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getBlockNames</h4>
+<pre class="methodSignature">public&nbsp;java.util.ArrayList&lt;java.lang.String&gt;&nbsp;getBlockNames()</pre>
+<div class="block">get array of block names</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>String[] of names</dd>
+</dl>
+</li>
+</ul>
 <a id="getInputs()">
 <!--   -->
 </a>
@@ -341,6 +440,20 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>input wires</dd>
+</dl>
+</li>
+</ul>
+<a id="addSlackDelay(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addSlackDelay</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;addSlackDelay&#8203;(java.lang.String&nbsp;name)</pre>
+<div class="block">add delay to block equivalent to block's slack</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - the string name of the block</dd>
 </dl>
 </li>
 </ul>
@@ -548,7 +661,7 @@ extends java.lang.Object</pre>
 <a id="setBlocks(java.util.HashMap)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>setBlocks</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setBlocks&#8203;(java.util.HashMap&lt;java.lang.String,&#8203;<a href="Block.html" title="class in com.ece6133.model.timing">Block</a>&gt;&nbsp;blocks)</pre>
@@ -557,6 +670,53 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>blocks</code> - blocks</dd>
 </dl>
+</li>
+</ul>
+<a id="getCoarseNetlist()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getCoarseNetlist</h4>
+<pre class="methodSignature">public&nbsp;<a href="CoarseNetlist.html" title="class in com.ece6133.model.timing">CoarseNetlist</a>&nbsp;getCoarseNetlist()</pre>
+<div class="block">netlist</div>
+</li>
+</ul>
+<a id="setCoarseNetlist(com.ece6133.model.timing.CoarseNetlist)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setCoarseNetlist</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setCoarseNetlist&#8203;(<a href="CoarseNetlist.html" title="class in com.ece6133.model.timing">CoarseNetlist</a>&nbsp;coarseNetlist)</pre>
+</li>
+</ul>
+<a id="getCoarsePathList()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getCoarsePathList</h4>
+<pre class="methodSignature">public&nbsp;<a href="CoarsePathList.html" title="class in com.ece6133.model.timing">CoarsePathList</a>&nbsp;getCoarsePathList()</pre>
+<div class="block">pathlist</div>
+</li>
+</ul>
+<a id="setCoarsePathList(com.ece6133.model.timing.CoarsePathList)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setCoarsePathList</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setCoarsePathList&#8203;(<a href="CoarsePathList.html" title="class in com.ece6133.model.timing">CoarsePathList</a>&nbsp;coarsePathList)</pre>
+</li>
+</ul>
+<a id="luBlkNode(com.ece6133.model.timing.Block)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>luBlkNode</h4>
+<pre class="methodSignature">public&nbsp;<a href="BlockNode.html" title="class in com.ece6133.model.timing">BlockNode</a>&nbsp;luBlkNode&#8203;(<a href="Block.html" title="class in com.ece6133.model.timing">Block</a>&nbsp;b)</pre>
 </li>
 </ul>
 </li>

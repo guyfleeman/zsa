@@ -8,7 +8,10 @@ public class CoarsePathSegment {
     private NetNode source;
     private NetNode sink;
     private int rlDist = 0;
-    private float rcRteDelay = 0;
+    private int delay = 0;
+    private int slack = 0;
+    private int delta = 0;
+    private boolean finalized = false;
 
     /**
      * get the block driving the segment
@@ -78,20 +81,44 @@ public class CoarsePathSegment {
      * get the RC delay estimate for the segment
      * @return
      */
-    public float getRcRteDelay() {
-        return rcRteDelay;
+    public int getDelay() {
+        return delay;
     }
 
     /**
      * set the RC delay estimate for the segment
-     * @param rcRteDelay
+     * @param delay
      */
-    public void setRcRteDelay(float rcRteDelay) {
-        this.rcRteDelay = rcRteDelay;
+    public void setDelay(int delay) {
+        this.delay = delay;
     }
 
     @Override
     public String toString() {
-        return "" + source.getParent().getName() + " -> " + sink.getParent().getName() + "[TODO DLY]";
+        return "" + source.getParent().getName() + "->" + sink.getParent().getName();
+    }
+
+    public int getSlack() {
+        return slack;
+    }
+
+    public void setSlack(int slack) {
+        this.slack = slack;
+    }
+
+    public int getDelta() {
+        return delta;
+    }
+
+    public void setDelta(int delta) {
+        this.delta = delta;
+    }
+
+    public void finalizeSlack() {
+        this.finalized = true;
+    }
+
+    public boolean isFinalized() {
+        return finalized;
     }
 }

@@ -46,7 +46,7 @@ public class Block {
      * @return
      */
     public int getReadyTime() {
-        return getReadyTime;
+        return readyTime;
     }
 
     /**
@@ -54,7 +54,7 @@ public class Block {
      * @return
      */
     public int getRequiredTime() {
-        return getRequiredTime;
+        return requiredTime;
     }
 
     /**
@@ -84,7 +84,7 @@ public class Block {
     /**
      * sets the slack
      */
-    public void setSlack(void) {
+    public void setSlack() {
         this.slack = this.readyTime - this.requiredTime;
     }
 

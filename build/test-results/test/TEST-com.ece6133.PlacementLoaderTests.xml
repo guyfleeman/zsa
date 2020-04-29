@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.ece6133.PlacementLoaderTests" tests="7" skipped="0" failures="0" errors="0" timestamp="2020-04-28T21:41:11" hostname="maven-desktop-linux" time="4.531">
+<testsuite name="com.ece6133.PlacementLoaderTests" tests="12" skipped="0" failures="0" errors="0" timestamp="2020-04-29T07:04:29" hostname="maven-desktop-linux" time="4.744">
   <properties/>
-  <testcase name="testNetlistBuild" classname="com.ece6133.PlacementLoaderTests" time="1.881"/>
-  <testcase name="testPathRec" classname="com.ece6133.PlacementLoaderTests" time="1.512"/>
-  <testcase name="parsePlacement" classname="com.ece6133.PlacementLoaderTests" time="0.003"/>
+  <testcase name="testNetlistBuild" classname="com.ece6133.PlacementLoaderTests" time="1.77"/>
+  <testcase name="testPathRec" classname="com.ece6133.PlacementLoaderTests" time="1.83"/>
+  <testcase name="parsePlacement" classname="com.ece6133.PlacementLoaderTests" time="0.004"/>
   <testcase name="primitiveNetlist" classname="com.ece6133.PlacementLoaderTests" time="0.0"/>
-  <testcase name="loadNetlist" classname="com.ece6133.PlacementLoaderTests" time="0.664"/>
-  <testcase name="testPlacementMapping" classname="com.ece6133.PlacementLoaderTests" time="0.468"/>
-  <testcase name="primitiveCoarsePathList" classname="com.ece6133.PlacementLoaderTests" time="0.001"/>
+  <testcase name="testZeroSlackBuildRequiredArrivalTimes" classname="com.ece6133.PlacementLoaderTests" time="0.0"/>
+  <testcase name="testZeroSlackBuildArrivalTimes" classname="com.ece6133.PlacementLoaderTests" time="0.0"/>
+  <testcase name="testZeroSlackProducesZeroSlack" classname="com.ece6133.PlacementLoaderTests" time="0.001"/>
+  <testcase name="testZeroSlackBuildEdgeSlacks" classname="com.ece6133.PlacementLoaderTests" time="0.0"/>
+  <testcase name="testZeroSlackInternalDeltas" classname="com.ece6133.PlacementLoaderTests" time="0.0"/>
+  <testcase name="loadNetlist" classname="com.ece6133.PlacementLoaderTests" time="0.6"/>
+  <testcase name="testPlacementMapping" classname="com.ece6133.PlacementLoaderTests" time="0.533"/>
+  <testcase name="primitiveCoarsePathList" classname="com.ece6133.PlacementLoaderTests" time="0.0"/>
   <system-out><![CDATA[Recovered Nets:1136
 : Source: <NetNode: N: n15058, P: Block (n15058): I: 1, O: 1, PlInfo: PL Info (n15058): [35, 19], 0, 482>, 
 	Sinks: [<NetNode: N: n15058, P: Block (n14830): I: 1, O: 1, PlInfo: PL Info (n14830): [35, 21], 0, 478>, <>]
@@ -3895,16 +3900,36 @@ Bad Nets: 151
 	Sinks: [<NetNode: N: b1-out, P: Block (B2): I: 1, O: 1, PlInfo: PL Info (PLI - B2): [0, 0], 0, 0>, <>]
 
 
+set delta 6 for B->C
+set delta 0 for B->D
+set delta 6 for C->F
+set delta 0 for D->F
+set delta 0 for F->G
+set delta 0 for F->H
+set delta 9 for C->E
+set delta 9 for E->G
+set delta 0 for E->I
+set delta -6 for A->C
+set delta 0 for B->D
+set delta 0 for D->F
+set delta 0 for F->G
+set delta 0 for F->H
+set delta 6 for B->C
+set delta 6 for C->F
+set delta 9 for C->E
+set delta 9 for E->G
+set delta 0 for E->I
+set delta -6 for A->C
 Coarse Path List: (ct:9)
-C -> C1[TODO DLY], C1 -> F[TODO DLY], 
-C -> B1[TODO DLY], B1 -> B2[TODO DLY], B2 -> D[TODO DLY], 
-C -> B1[TODO DLY], B1 -> B2[TODO DLY], B2 -> E[TODO DLY], 
-A -> A1[TODO DLY], A1 -> D[TODO DLY], 
-A -> B1[TODO DLY], B1 -> B2[TODO DLY], B2 -> D[TODO DLY], 
-A -> B1[TODO DLY], B1 -> B2[TODO DLY], B2 -> E[TODO DLY], 
-B -> A1[TODO DLY], A1 -> D[TODO DLY], 
-B -> B1[TODO DLY], B1 -> B2[TODO DLY], B2 -> D[TODO DLY], 
-B -> B1[TODO DLY], B1 -> B2[TODO DLY], B2 -> E[TODO DLY], 
+C->C1->F
+C->B1->B2->D
+C->B1->B2->E
+B->A1->D
+B->B1->B2->D
+B->B1->B2->E
+A->A1->D
+A->B1->B2->D
+A->B1->B2->E
 
 
 ]]></system-out>
